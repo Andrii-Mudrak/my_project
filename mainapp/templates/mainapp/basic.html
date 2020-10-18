@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{%  block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="product.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="d-flex d-flex justify-content-around align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+
+        <a class="p-2 text-dark" href="/list"><h3>Перелік</h3></a>
+        <a class="p-2 text-dark" href="/create"><h3>Створення</h3></a>
+        <a class="p-2 text-dark" href="/comment"><h3>Коментар</h3></a>
+        <a class="p-2 text-dark" href="/look"><h3>Перегляд</h3></a>
+        <a class="p-2 text-dark" href="/done"><h3>Виконані</h3></a>
+        <a class="btn btn-outline-primary" href="#">Вхід</a>
+        <a class="btn btn-outline-primary" href="#">Коментар</a>
+        <a class="btn btn-outline-primary" href="#">Відклик</a>
+            </div>
+        </nav>
+
+{%  block body %}{% endblock %}
+
+</body>
+</html>
