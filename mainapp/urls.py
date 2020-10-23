@@ -8,4 +8,5 @@ urlpatterns = [
     path('comment', views.comment),
     path('look', views.look),
     path('done', views.done),
+    path('signup', views.signup),
 ]
