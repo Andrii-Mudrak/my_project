@@ -6,28 +6,56 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{%  block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-    <!-- Custom styles for this template -->
-    <link href="product.css" rel="stylesheet">
-</head>
-
 <body>
+<body style="color:black; background-color:#66cccc">
+<style>
+.container {
+  height: 80px;
+  position: center;
+  border: 3px solid black;
+}
 
-    <div class="d-flex d-flex justify-content-around align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+.center {
+  margin: 0;
+  position: center;
+  top:0;
+  bottom:0;
+  left: 0;
+  right: 0;
+}
+</style>
+<div class="container">
+    <div class="center">
+        <p>
+        <div class="d-flex d-flex justify-content-around align-items-center">
+        <a class="btn btn-outline-primary" href="/list"><big>Перелік</big></a>
+        <a class="btn btn-outline-primary" href="/create"><big>Створення</big></a>
+        <a class="btn btn-outline-primary" href="/comment"><big>Коментар</big></a>
+        <a class="btn btn-outline-primary" href="/look"><big>Перегляд</big></a>
+        <a class="btn btn-outline-primary" href="/done"><big>Виконані</big></a>
+        <b><align = "right">Користувачів: </b>{{ count }}
+              </p>
+        {% if user.is_authenticated %}
+        <a class="btn btn-outline-primary" href="/home"><big>Головна</big></a>/
+        <a class="btn btn-outline-primary" href="logout"><big>Вихід</big></a>
+        <strong>Ви ввійшли як {{ user.username }}</strong>
+        {% else %}
+        <a class="btn btn-outline-primary" href="/signup"><big>Реєстрація</big></a>/
+        <a class="btn btn-outline-primary" href="login"><big>Вхід</big></a>/
+        {% endif%}
+        <p>
 
-        <a class="p-2 text-dark" href="/list"><h3>Перелік</h3></a>
-        <a class="p-2 text-dark" href="/create"><h3>Створення</h3></a>
-        <a class="p-2 text-dark" href="/comment"><h3>Коментар</h3></a>
-        <a class="p-2 text-dark" href="/look"><h3>Перегляд</h3></a>
-        <a class="p-2 text-dark" href="/done"><h3>Виконані</h3></a>
-        <a class="btn btn-outline-primary" href="#">Вхід</a>
-        <a class="btn btn-outline-primary" href="#">Коментар</a>
-        <a class="btn btn-outline-primary" href="#">Відклик</a>
-            </div>
-        </nav>
+        </p>
 
-{%  block body %}{% endblock %}
 
+
+
+
+    </div>
+</div>
+
+{%  block body %}
+
+{% endblock %}
 </body>
 </html>
