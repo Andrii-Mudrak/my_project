@@ -57,7 +57,7 @@ ROOT_URLCONF = 'my_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'mainapp/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,7 +69,6 @@ TEMPLATES = [
         },
     },
 ]
-
 WSGI_APPLICATION = 'my_project.wsgi.application'
 
 
@@ -129,4 +128,7 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/home'
 LOGOUT_REDIRECT_URL = '/home'
+
+#console only
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
