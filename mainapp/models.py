@@ -6,10 +6,10 @@ from datetime import datetime
 # Create your models here.
 
 class Comments(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    content = models.TextField(max_length=400, blank=False)
-    created_at = models.DateTimeField(default=datetime.utcnow)
-    deleted_at = models.DateTimeField(null=True)
+    id = models.BigAutoField('id',primary_key=True)
+    content = models.TextField('content', max_length=400, blank=False)
+    created_at = models.DateTimeField('created_at', default=datetime.utcnow)
+    deleted_at = models.DateTimeField('deleted_at', null=True)
     user_id = models.ForeignKey('User_agent', on_delete=models.SET_NULL, null=True)
     product_id = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True)
 
@@ -17,22 +17,22 @@ class Comments(models.Model):
         return self.content
 
 class Product(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    title = models.CharField(max_length=100, blank=False)
-    content = models.TextField(max_length=400, blank=False)
-    created_at = models.DateTimeField(default=datetime.utcnow)
-    deleted_at = models.DateTimeField(null=True)
-    is_active = models.BooleanField(default=False)
+    id = models.BigAutoField('id', primary_key=True)
+    title = models.CharField('title', max_length=100, blank=False)
+    content = models.TextField('content', max_length=400, blank=False)
+    created_at = models.DateTimeField('created_at', default=datetime.utcnow)
+    deleted_at = models.DateTimeField('deleted_at', null=True)
+    is_active = models.BooleanField('is_active',default=False)
     autor_id = models.ForeignKey('User_agent', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.content
 
 class Responces(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    message = models.CharField(max_length=100, blank=False)
-    created_at = models.DateTimeField(default=datetime.utcnow)
-    deleted_at = models.DateTimeField(null=True)
+    id = models.BigAutoField('id', primary_key=True)
+    message = models.CharField('message', max_length=100, blank=False)
+    created_at = models.DateTimeField('created_at', default=datetime.utcnow)
+    deleted_at = models.DateTimeField('deleted_at', null=True)
     product_id = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True)
     autor_id = models.ForeignKey('User_agent', on_delete=models.SET_NULL, null=True)
 
@@ -40,16 +40,16 @@ class Responces(models.Model):
         return self.message
 
 class Profile(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    name = models.CharField(max_length=100, blank=False)
-    phone = models.CharField(max_length=12, blank=False,
+    id = models.BigAutoField('id', primary_key=True)
+    name = models.CharField('name', max_length=100, blank=False)
+    phone = models.CharField('phone', max_length=12, blank=False,
                              validators=[int_list_validator(sep=''),
                                          MinLengthValidator(12),],
                              default='380671234567')
-    created_at = models.DateTimeField(default=datetime.utcnow)
-    updated_at = models.DateTimeField(default=datetime.utcnow)
-    deleted_at = models.DateTimeField(null=True)
-    is_verified = models.BooleanField(default=False)
+    created_at = models.DateTimeField('created_at', default=datetime.utcnow)
+    updated_at = models.DateTimeField('updated_at', default=datetime.utcnow)
+    deleted_at = models.DateTimeField('deleted _at', null=True)
+    is_verified = models.BooleanField('verified', default=False)
     user_id = models.ForeignKey('User_agent', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
