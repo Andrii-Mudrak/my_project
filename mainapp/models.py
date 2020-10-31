@@ -5,7 +5,7 @@ from datetime import datetime
 
 # Create your models here.
 
-class Comments(models.Model):
+class Comment(models.Model):
     id = models.BigAutoField('id',primary_key=True)
     content = models.TextField('content', max_length=400, blank=False)
     created_at = models.DateTimeField('created_at', default=datetime.utcnow)
@@ -28,7 +28,7 @@ class Product(models.Model):
     def __str__(self):
         return self.content
 
-class Responces(models.Model):
+class Responce(models.Model):
     id = models.BigAutoField('id', primary_key=True)
     message = models.CharField('message', max_length=100, blank=False)
     created_at = models.DateTimeField('created_at', default=datetime.utcnow)
