@@ -4,11 +4,10 @@
 
 {% block body %}
 <h2>Log in</h2>
-<form method="post">
+<form method = "post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Вхід</button>
-    <a href="/
-    password_reset">Забули пароль?</a>
+    <button type = "submit">Вхід</button>
+    <a href="/password_reset">Забули пароль?</a>
 </form>
 {% endblock %}
