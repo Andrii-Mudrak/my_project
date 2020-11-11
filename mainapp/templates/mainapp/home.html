@@ -4,6 +4,6 @@
 
 {% block body %}
 <h1 align="center">Домашня сторінка</h1>
-<h1 align="center">Вітаю на сайті, {% if user.is_authenticated %}{{ user.username }}{% else%}гість{% endif %} </h1>
+<h1 align="center">Вітаю на сайті, {% if user.is_authenticated %}{{ user.username }}{% else %}гість{% endif %} </h1>
 
 {% endblock %}

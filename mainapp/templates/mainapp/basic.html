@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset = "UTF-8">
-    <meta name = "viewport"
+    <meta charset="UTF-8">
+    <meta name="viewport"
           content = "width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv = "X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{%  block title %}{% endblock %}</title>
     <style>
    .text {
@@ -29,28 +29,28 @@
   right: 0;
 }
 </style>
-<div class = "container">
-    <div class = "text">
+<div class="container">
+    <div class="text">
         <p>
-            <div class = "d-flex d-flex justify-content-around align-items-center">
-            <a class = "btn btn-outline-primary" href="/look"><big>Перегляд</big></a>
+            <div class="d-flex d-flex justify-content-around align-items-center">
+            <a class="btn btn-outline-primary" href="/look"><big>Перегляд</big></a>
             </div>
         {% if user.is_authenticated %}
-            <a class = "btn btn-outline-primary" href="/home"><big>Головна</big></a> -
-            <a class = "btn btn-outline-primary" href="/password_change"><big>Змінити пароль</big></a> -
-            <a class = "btn btn-outline-primary" href="/logout"><big>Вихід</big></a> -
-            <a class = "btn btn-outline-primary" href="/list"><big>Перелік</big></a> -
-            <a class = "btn btn-outline-primary" href="/create"><big>Створення</big></a> -
-            <a class = "btn btn-outline-primary" href="/done"><big>Виконані</big></a> -
-            <a class = "btn btn-outline-primary" href="/comment"><big>Коментар</big></a>
+            <a class="btn btn-outline-primary" href="/home"><big>Головна</big></a> -
+            <a class="btn btn-outline-primary" href="/password_change"><big>Змінити пароль</big></a> -
+            <a class="btn btn-outline-primary" href="/logout"><big>Вихід</big></a> -
+            <a class="btn btn-outline-primary" href="/list"><big>Перелік</big></a> -
+            <a class="btn btn-outline-primary" href="/create"><big>Створення</big></a> -
+            <a class="btn btn-outline-primary" href="/done"><big>Виконані</big></a> -
+            <a class="btn btn-outline-primary" href="/comment"><big>Коментар</big></a>
         <p>
             <strong>Ви ввійшли як {{ user.username }}</strong>
         </p>
 
         {% else %}
-            <a class = "btn btn-outline-primary" href="/signup"><big>Реєстрація</big></a>/
-            <a class = "btn btn-outline-primary" href="/login"><big>Вхід</big></a>/
-        {% endif%}
+            <a class="btn btn-outline-primary" href="/signup"><big>Реєстрація</big></a>/
+            <a class="btn btn-outline-primary" href="/login"><big>Вхід</big></a>/
+        {% endif %}
         </div>
      </div>
 

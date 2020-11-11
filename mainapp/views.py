@@ -1,5 +1,3 @@
-from typing import Any
-
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -8,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 def home(request):
-    count: Any = User.objects.count()
+    count = User.objects.count()
     return render(request, 'mainapp/home.html', {'count': count})
 
 

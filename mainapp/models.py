@@ -25,7 +25,7 @@ class Product(models.Model):
     created_at = models.DateTimeField('created_at', default=datetime.utcnow)
     deleted_at = models.DateTimeField('deleted_at', null=True)
     is_active = models.BooleanField('is_active', default=False)
-    autor = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.content
@@ -37,14 +37,13 @@ class Responce(models.Model):
     created_at = models.DateTimeField('created_at', default=datetime.utcnow)
     deleted_at = models.DateTimeField('deleted_at', null=True)
     product = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True)
-    autor = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.message
 
 
 class Profile(models.Model):
-    deleted_time = datetime.now() + timedelta(days=10)
     id = models.BigAutoField('id', primary_key=True)
     name = models.CharField('name', max_length=100, blank=False)
     phone = models.CharField('phone', max_length=12, blank=False,
@@ -56,7 +55,7 @@ class Profile(models.Model):
     #                          default='380671234567')
     created_at = models.DateTimeField('created_at', default=datetime.utcnow)
     updated_at = models.DateTimeField('updated_at', default=datetime.utcnow)
-    deleted_at = models.DateTimeField('deleted _at', null=True, default=deleted_time)
+    #deleted_at = models.DateTimeField('deleted_at', null=True, default=deleted_time)
     is_verified = models.BooleanField('verified', default=False)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 
