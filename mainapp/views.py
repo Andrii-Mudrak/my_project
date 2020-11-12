@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-
-
+from .models import Comment, Product, Responce, Profile
 # Create your views here.
+
 
 def home(request):
     count = User.objects.count()
@@ -21,8 +21,9 @@ def create(request):
 
 
 def comment(request):
-    count = User.objects.count()
-    return render(request, 'mainapp/comment.html', {'count': count})
+    # count = User.objects.count()
+    com = Comment.objects.all()
+    return render(request, 'mainapp/comment.html', {'title': 'Коментарccc', 'comm': com})
 
 
 def look(request):
