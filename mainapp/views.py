@@ -2,12 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Comment, Product, Responce, Profile
+from .forms import SignUpForm
 # Create your views here.
 
 
 def home(request):
     count = User.objects.count()
-    return render(request, 'mainapp/home.html', {'count': count})
+    prod = Product.objects.all()
+    return render(request, 'mainapp/home.html', {'title': 'перелік', 'prod': prod, 'count': count})
 
 
 def list(request):
@@ -38,10 +40,14 @@ def done(request):
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, 'mainapp/home.html')
+        return render(request, 'mainapp/home.html')
     else:
-        form = UserCreationForm()
+        form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+
+def product(request):
+    return render(request, 'mainapp/product.html')
