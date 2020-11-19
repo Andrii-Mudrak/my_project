@@ -55,7 +55,7 @@ class Profile(models.Model):
     #                          default='380671234567')
     created_at = models.DateTimeField('created_at', default=datetime.utcnow)
     updated_at = models.DateTimeField('updated_at', default=datetime.utcnow)
-    #deleted_at = models.DateTimeField('deleted_at', null=True, default=deleted_time)
+    # deleted_at = models.DateTimeField('deleted_at', null=True, default=deleted_time)
     is_verified = models.BooleanField('verified', default=False)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 

@@ -5,12 +5,10 @@
 {% block body %}
 <!--<h1 align="center">Домашня сторінка</h1>-->
 <!--<h1 align="center">Вітаю на сайті, {% if user.is_authenticated %}{{ user.username }}{% else %}гість{% endif %} </h1>-->
-
-{% for element in prod %}
+{% for element in needed_Product %}
     <div class="alert alert-info" role="alert">
         <h3><a class="btn" href="/product">{{ element.content }}</href></h3>
-        <p><b>Дата створення:</b>{{ element.created_at }}</p>
-        <p><b>Користувач:</b>{{ element.author }}</p>
+        <b>Дата створення:</b>{{ element.created_at }} | <b>Користувач:</b>{{ element.author }}
 <!--       <p> <b>Опис:</b>{{element.content}}</p>-->
 <!--        <a class="btn" href="/product">Подивитися</href>-->
     </div>

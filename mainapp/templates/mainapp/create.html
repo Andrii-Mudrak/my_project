@@ -3,7 +3,11 @@
 {% block title %}
 Створення оголошення
 {% endblock %}
-
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Реєстрація</button>
+    </form>
 {% block body %}
 <h1>Створення свого оголошення</h1>
 {% endblock %}
