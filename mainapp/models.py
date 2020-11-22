@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.core.validators import MinLengthValidator, int_list_validator
 from datetime import datetime, timedelta
+from django.forms import ModelForm
 
 
 # Create your models here.
@@ -48,7 +49,7 @@ class Profile(models.Model):
     name = models.CharField('name', max_length=100, blank=False)
     phone = models.CharField('phone', max_length=12, blank=False,
                              validators=[int_list_validator(sep=''),
-                                         MinLengthValidator(12), ])  #this is without default phone number
+                                         MinLengthValidator(12), ])  # this is without default phone number
     # phone = models.CharField('phone', max_length=12, blank=False,
     #                          validators=[int_list_validator(sep=''),
     #                                      MinLengthValidator(12), ],
@@ -61,3 +62,16 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ProductForm(ModelForm):
+    class Meta:
+        model = Product
+        # I've tried both of these 'fields' declaration, result is the same
+        fields = ['title', 'content']
+
+
+class ProfileForm(ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['name', 'phone']

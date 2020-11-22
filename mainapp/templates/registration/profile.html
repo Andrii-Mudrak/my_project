@@ -14,10 +14,10 @@
         {% endif %}
         {% for error in field.errors %}
 
-    <p> style="color: red">{{ error }}</p>
-        {% endfor %}
+    <p style="color: red">{{ error }}</p>
+    {% endfor %}
 
     {% endfor %}
-    <button type="submit">Add</button>
+    <button type="submit">Add profile</button>
 </form>
 {% endblock %}

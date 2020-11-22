@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Product, Profile
+from datetime import datetime, timedelta
 
 
 class SignUpForm(UserCreationForm):
@@ -22,3 +24,26 @@ class SignUpForm(UserCreationForm):
         # I've tried both of these 'fields' declaration, result is the same
         # fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
         fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'email')
+
+
+class ProductForm(forms.ModelForm):
+    title = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Title'}), max_length=100)
+    content = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Content'}), max_length=400)
+
+    class Meta:
+        model = Product
+    #     # I've tried both of these 'fields' declaration, result is the same
+        fields = ['title', 'content']
+
+
+class ProfileForm(forms.ModelForm):
+    name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Title'}), max_length=100)
+    phone = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Content'}), max_length=400)
+
+    class Meta:
+        model = Profile
+        fields = ['name', 'phone']
