@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+# from django.contrib.auth.views import loginView
 # from mainapp.views import HomeView
 from django.views.generic import TemplateView
 
@@ -24,5 +25,6 @@ urlpatterns = [
     path('login/', include('django.contrib.auth.urls')),
     path('logout/', include('django.contrib.auth.urls')),
     path('password_change/', include('django.contrib.auth.urls')),
+    # path(r'^accounts/login/$', include('django.contrib.auth.views.login'), {'template_name': 'mainapp/login.html'}),
     path('', include('mainapp.urls')),
 ]

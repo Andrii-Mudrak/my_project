@@ -9,6 +9,7 @@ urlpatterns = [
     path('product', views.product),
     path('home', views.home),
     path('list', views.list),
+    path('profile', views.profile),
     path('create', views.create, name='create'),
     path('comment', views.comment),
     # path('look', HomeView.as_view(template_name="mainapp/home.html")),

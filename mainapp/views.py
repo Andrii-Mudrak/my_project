@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView
+# from django.views.generic import ListView, DetailView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Comment, Product, Responce, Profile
-from .forms import SignUpForm, ProductForm
+from .forms import SignUpForm, ProductForm, ProfileForm
+
+
+# from django.contrib.auth.decorators import login_required
+# from django.db import transaction
 # Create your views here.
 
 
@@ -14,23 +18,12 @@ def home(request):
     return render(request, 'mainapp/home.html', {'title': 'перелік', 'prod': prod, 'prof': prof, 'count': count})
 
 
-# class HomeView(ListView):
-#     model = Product.objects.all()
-#     template_name = "mainapp/home.html"
-#
-#     # def get_context_data(self, **kwargs):
-#     #     context = super().get_context_data(**kwargs)
-#     #     context['Needed_Product'] = Product.objects.all()
-#     #     return context
-
-
 def list(request):
     count = User.objects.count()
     return render(request, 'mainapp/list.html', {'count': count})
 
 
 def create(request):
-    # return render(request, 'mainapp/home.html')
     if request.method == 'POST':
         form = ProductForm(request.POST)
         if form.is_valid():
@@ -39,14 +32,9 @@ def create(request):
     else:
         form = ProductForm()
         return render(request, 'mainapp/create.html', {'form': form})
-    # else:
-    #     form = SignUpForm()
-    # # return render(request, 'registration/signup.html', {'form': form})
-    # return render(request, 'mainapp/create.html', {'count': count})
 
 
 def comment(request):
-    # count = User.objects.count()
     com = Comment.objects.all()
     return render(request, 'mainapp/comment.html', {'title': 'Коментарccc', 'comm': com})
 
@@ -64,18 +52,29 @@ def done(request):
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
+        profile_form = ProfileForm(request.POST)
         if form.is_valid():
             form.save()
+        if profile_form.is_valid():
+            profile_form.save()
         return render(request, 'mainapp/home.html')
     else:
         form = SignUpForm()
-    return render(request, 'registration/signup.html', {'form': form})
+        profile_form = ProfileForm()
+        return render(request, 'mainapp/signup.html', {'form': form, 'profile_form': profile_form})
 
 
 def product(request):
     return render(request, 'mainapp/product.html')
 
 
-# class ArticleDetailView(DetailView):
-#     model = Product
-#     template_name = "mainapp/article_detail.html"
+def profile(request):
+    # return render(request, 'mainapp/home.html')
+    if request.method == 'POST':
+        form = ProfileForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('/home')
+    else:
+        form = ProfileForm()
+        return render(request, 'mainapp/profile.html', {'form': form})

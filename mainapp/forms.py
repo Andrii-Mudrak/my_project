@@ -22,8 +22,8 @@ class SignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
         # I've tried both of these 'fields' declaration, result is the same
-        # fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
-        fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'email')
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+        # fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'email')
 
 
 class ProductForm(forms.ModelForm):
@@ -40,9 +40,9 @@ class ProductForm(forms.ModelForm):
 
 class ProfileForm(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control', 'placeholder': 'Title'}), max_length=100)
+        'class': 'form-control', 'placeholder': 'name'}), max_length=100)
     phone = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control', 'placeholder': 'Content'}), max_length=400)
+        'class': 'form-control', 'placeholder': 'phone'}), max_length=12)
 
     class Meta:
         model = Profile

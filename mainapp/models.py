@@ -47,13 +47,11 @@ class Responce(models.Model):
 class Profile(models.Model):
     id = models.BigAutoField('id', primary_key=True)
     name = models.CharField('name', max_length=100, blank=False)
+    # phone = models.C('phone', blank=False, decimal_places=12, max_digits=12)  # this is without default phone number
     phone = models.CharField('phone', max_length=12, blank=False,
                              validators=[int_list_validator(sep=''),
-                                         MinLengthValidator(12), ])  # this is without default phone number
-    # phone = models.CharField('phone', max_length=12, blank=False,
-    #                          validators=[int_list_validator(sep=''),
-    #                                      MinLengthValidator(12), ],
-    #                          default='380671234567')
+                                         MinLengthValidator(12), ],
+                             default='380671234567')
     created_at = models.DateTimeField('created_at', default=datetime.utcnow)
     updated_at = models.DateTimeField('updated_at', default=datetime.utcnow)
     # deleted_at = models.DateTimeField('deleted_at', null=True, default=deleted_time)

@@ -1,6 +1,12 @@
 {% extends 'mainapp/basic.html' %}
 {% block title %}Домашня сторінка{% endblock %}
 {% block body %}
+    {% if user.is_autenticated %}
+        <h1>{{ user.username}}</h1>
+    {% else %}
+       {{ prof.name.all }}
+        <h1>{{ user.username}}</h1>
+    {% endif %}
     {% for element in prod %}
         <div class="alert alert-info" role="alert">
             {{ element.title }} -
