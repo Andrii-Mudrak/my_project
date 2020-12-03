@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core.validators import MinLengthValidator, int_list_validator
 from datetime import datetime, timedelta
 from django.forms import ModelForm
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -50,26 +51,14 @@ class Profile(models.Model):
     # phone = models.C('phone', blank=False, decimal_places=12, max_digits=12)  # this is without default phone number
     phone = models.CharField('phone', max_length=12, blank=False,
                              validators=[int_list_validator(sep=''),
-                                         MinLengthValidator(12), ],
+                                         MinLengthValidator(7), ],
                              default='380671234567')
     created_at = models.DateTimeField('created_at', default=datetime.utcnow)
     updated_at = models.DateTimeField('updated_at', default=datetime.utcnow)
     # deleted_at = models.DateTimeField('deleted_at', null=True, default=deleted_time)
     is_verified = models.BooleanField('verified', default=False)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.name
 
-
-class ProductForm(ModelForm):
-    class Meta:
-        model = Product
-        # I've tried both of these 'fields' declaration, result is the same
-        fields = ['title', 'content']
-
-
-class ProfileForm(ModelForm):
-    class Meta:
-        model = Profile
-        fields = ['name', 'phone']
