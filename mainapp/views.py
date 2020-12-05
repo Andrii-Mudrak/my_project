@@ -53,10 +53,12 @@ def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         profile_form = ProfileForm(request.POST)
-        if form.is_valid():
-            form.save()
-        if profile_form.is_valid():
-            profile_form.save()
+        if form.is_valid() and profile_form.is_valid():
+            user = form.save()
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
+        context = {'form':form, 'profile_form':profile_form}
         return render(request, 'mainapp/home.html')
     else:
         form = SignUpForm()

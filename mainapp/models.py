@@ -51,7 +51,7 @@ class Profile(models.Model):
     # phone = models.C('phone', blank=False, decimal_places=12, max_digits=12)  # this is without default phone number
     phone = models.CharField('phone', max_length=12, blank=False,
                              validators=[int_list_validator(sep=''),
-                                         MinLengthValidator(7), ],
+                                         MinLengthValidator(7)],
                              default='380671234567')
     created_at = models.DateTimeField('created_at', default=datetime.utcnow)
     updated_at = models.DateTimeField('updated_at', default=datetime.utcnow)
@@ -61,4 +61,3 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.name
-
