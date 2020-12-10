@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Comment, Product, Responce, Profile
 from .forms import SignUpForm, ProductForm, ProfileForm
-
+from django.contrib.auth.decorators import login_required
 
 # from django.contrib.auth.decorators import login_required
 # from django.db import transaction
@@ -23,12 +23,15 @@ def list(request):
     return render(request, 'mainapp/list.html', {'count': count})
 
 
+@login_required
 def create(request):
     if request.method == 'POST':
         form = ProductForm(request.POST)
         if form.is_valid():
-            form.save()
-        return render(request, 'mainapp/home.html')
+            auth = form.save(commit=False)
+            auth.author = Profile.objects.get(pk=request.user.pk)
+            auth.save()
+        return render(request, 'mainapp/home.html'  )
     else:
         form = ProductForm()
         return render(request, 'mainapp/create.html', {'form': form})
@@ -58,7 +61,7 @@ def signup(request):
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
-        context = {'form':form, 'profile_form':profile_form}
+        context = {'form': form, 'profile_form': profile_form}
         return render(request, 'mainapp/home.html')
     else:
         form = SignUpForm()
