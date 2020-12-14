@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Comment(models.Model):
-    id = models.BigAutoField('id', primary_key=True)
+    id = models.BigAutoField(primary_key=True)
     content = models.TextField('content', max_length=400, blank=False)
     created_at = models.DateTimeField('created_at', default=datetime.utcnow)
     deleted_at = models.DateTimeField('deleted_at', null=True)
@@ -20,8 +20,9 @@ class Comment(models.Model):
         return self.content
 
 
+
 class Product(models.Model):
-    id = models.BigAutoField('id', primary_key=True)
+    id = models.BigAutoField(primary_key=True)
     title = models.CharField('title', max_length=100, blank=False)
     content = models.TextField('content', max_length=400, blank=False)
     created_at = models.DateTimeField('created_at', default=datetime.utcnow)
@@ -34,7 +35,7 @@ class Product(models.Model):
 
 
 class Responce(models.Model):
-    id = models.BigAutoField('id', primary_key=True)
+    id = models.BigAutoField(primary_key=True)
     message = models.CharField('message', max_length=100, blank=False)
     created_at = models.DateTimeField('created_at', default=datetime.utcnow)
     deleted_at = models.DateTimeField('deleted_at', null=True)
@@ -46,7 +47,7 @@ class Responce(models.Model):
 
 
 class Profile(models.Model):
-    id = models.BigAutoField('id', primary_key=True)
+    id = models.BigAutoField(primary_key=True)
     name = models.CharField('name', max_length=100, blank=False)
     # phone = models.C('phone', blank=False, decimal_places=12, max_digits=12)  # this is without default phone number
     phone = models.CharField('phone', max_length=12, blank=False,

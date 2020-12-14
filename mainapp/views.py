@@ -28,9 +28,10 @@ def create(request):
     if request.method == 'POST':
         form = ProductForm(request.POST)
         if form.is_valid():
-            auth = form.save(commit=False)
-            auth.author = Profile.objects.get(pk=request.user.pk)
-            auth.save()
+            username = request.user.username
+            profile = Profile.objects.all() #(user=username)
+            form.instance.profile = profile
+            form.save()
         return render(request, 'mainapp/home.html'  )
     else:
         form = ProductForm()
@@ -59,7 +60,7 @@ def signup(request):
         if form.is_valid() and profile_form.is_valid():
             user = form.save()
             profile = profile_form.save(commit=False)
-            profile.user = user
+            profile.name = user
             profile.save()
         context = {'form': form, 'profile_form': profile_form}
         return render(request, 'mainapp/home.html')

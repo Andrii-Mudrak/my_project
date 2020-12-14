@@ -41,9 +41,10 @@ class ProductForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': 'name'}), max_length=100)
-    # phone = forms.CharField(widget=forms.TextInput(attrs={
-    #     'class': 'form-control', 'placeholder': 'phone'}), max_length=12)
+    phone = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'phone'}), max_length=12)
+
 
     class Meta:
         model = Profile
-        fields = ['name']
+        fields = ['name', 'phone']
