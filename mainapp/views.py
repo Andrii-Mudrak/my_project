@@ -23,14 +23,18 @@ def list(request):
     return render(request, 'mainapp/list.html', {'count': count})
 
 
-@login_required
 def create(request):
     if request.method == 'POST':
         form = ProductForm(request.POST)
-        if form.is_valid():
-            username = request.user.username
-            profile = Profile.objects.all() #(user=username)
-            form.instance.profile = profile
+        # User = request.user.username
+        if form.is_valid() and request.user.is_authenticated:
+            # profile = Profile.objects.filter(user=request.user).values('id')
+            print(request.user, '******', request.user.username)
+            profile = Profile.objects.filter(user=request.user.username).value('name')
+            print(profile, '****')
+            Product.author = profile.get('user')
+            print(profile, '****', Product.author)
+            # print(profile, '*****', form.author)
             form.save()
         return render(request, 'mainapp/home.html'  )
     else:
@@ -60,7 +64,7 @@ def signup(request):
         if form.is_valid() and profile_form.is_valid():
             user = form.save()
             profile = profile_form.save(commit=False)
-            profile.name = user
+            profile.user = user
             profile.save()
         context = {'form': form, 'profile_form': profile_form}
         return render(request, 'mainapp/home.html')

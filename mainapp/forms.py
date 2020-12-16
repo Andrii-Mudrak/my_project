@@ -28,9 +28,9 @@ class SignUpForm(UserCreationForm):
 
 class ProductForm(forms.ModelForm):
     title = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control', 'placeholder': 'Title'}), max_length=100)
+        'class': 'form-control', 'placeholder': 'Заголовок'}), max_length=100)
     content = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control', 'placeholder': 'Content'}), max_length=400)
+        'class': 'form-control', 'placeholder': 'Опис'}), max_length=400)
 
     class Meta:
         model = Product
