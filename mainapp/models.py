@@ -27,7 +27,7 @@ class Product(models.Model):
     content = models.TextField('content', max_length=400, blank=False)
     created_at = models.DateTimeField('created_at', default=datetime.utcnow)
     deleted_at = models.DateTimeField('deleted_at', null=True)
-    is_active = models.BooleanField('is_active', default=False)
+    is_active = models.BooleanField('is_active', default=True)
     author = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
@@ -57,7 +57,7 @@ class Profile(models.Model):
     created_at = models.DateTimeField('created_at', default=datetime.utcnow)
     updated_at = models.DateTimeField('updated_at', default=datetime.utcnow)
     # deleted_at = models.DateTimeField('deleted_at', null=True, default=deleted_time)
-    is_verified = models.BooleanField('verified', default=False)
+    is_verified = models.BooleanField('verified', default=True)
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):

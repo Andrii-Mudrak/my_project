@@ -26,16 +26,11 @@ def list(request):
 def create(request):
     if request.method == 'POST':
         form = ProductForm(request.POST)
-        # User = request.user.username
         if form.is_valid() and request.user.is_authenticated:
-            # profile = Profile.objects.filter(user=request.user).values('id')
-            print(request.user, '******', request.user.username)
-            profile = Profile.objects.filter(user=request.user.username).value('name')
-            print(profile, '****')
-            Product.author = profile.get('user')
-            print(profile, '****', Product.author)
-            # print(profile, '*****', form.author)
-            form.save()
+            prod = form.save(commit=False)
+            prod.is_active = 1
+            prod.author = Profile.objects.get(user=request.user)
+            prod.save()
         return render(request, 'mainapp/home.html'  )
     else:
         form = ProductForm()
@@ -65,6 +60,7 @@ def signup(request):
             user = form.save()
             profile = profile_form.save(commit=False)
             profile.user = user
+            profile.verified = 1
             profile.save()
         context = {'form': form, 'profile_form': profile_form}
         return render(request, 'mainapp/home.html')
