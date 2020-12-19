@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Product, Profile
+from .models import Product, Profile, Comment
 from datetime import datetime, timedelta
 
 
@@ -44,7 +44,15 @@ class ProfileForm(forms.ModelForm):
     phone = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': 'phone'}), max_length=12)
 
-
     class Meta:
         model = Profile
         fields = ['name', 'phone']
+
+
+class CommentForm(forms.ModelForm):
+    content = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'content'}), max_length=400)
+
+    class Meta:
+        model = Comment
+        fields = ['content']

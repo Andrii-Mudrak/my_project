@@ -1,17 +1,22 @@
 {% extends 'mainapp/basic.html' %}
 
-{% block title %}
-{{ title }}
+{% block title %} Коментар {{ title }}
 {% endblock %}
-
 {% block body %}
-    <h1>коментарі</h1>
-    {% for element in comm %}
-        <div class="alert alert-info" role="alert">
-            <h3>{{ element.content }}</h3>
-            <p><b>Дата створення:</b>{{element.created_at}}
-                <b>Користувач:</b>{{element.user_id}}
-                <b>Опис:</b>{{element.product_id}}</p>
-        </div>
+<form method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+    <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+        <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+
+    <p> style="color: red">{{ error }}</p>
+        {% endfor %}
+
     {% endfor %}
+    <button type="submit">Add</button>
 {% endblock %}

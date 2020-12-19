@@ -3,8 +3,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Comment, Product, Responce, Profile
-from .forms import SignUpForm, ProductForm, ProfileForm
+from .forms import SignUpForm, ProductForm, ProfileForm, CommentForm
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 
 # from django.contrib.auth.decorators import login_required
 # from django.db import transaction
@@ -31,15 +32,29 @@ def create(request):
             prod.is_active = 1
             prod.author = Profile.objects.get(user=request.user)
             prod.save()
-        return render(request, 'mainapp/home.html'  )
+        return render(request, 'mainapp/home.html')
     else:
         form = ProductForm()
         return render(request, 'mainapp/create.html', {'form': form})
 
 
 def comment(request):
-    com = Comment.objects.all()
-    return render(request, 'mainapp/comment.html', {'title': 'Коментарccc', 'comm': com})
+    # print(Product.objects.get(id))
+    prod = get_object_or_404(Product, id)
+    print('*****', prod)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+
+        if form.is_valid() and request.user.is_authenticated:
+            comm = form.save(commit=False)
+            comm.user_id = Profile.objects.get(user=request.user)
+            print(comm, comm.user_id)
+            comm.product_id = prod.object.get(user=request.user)
+            comm.save()
+        return render(request, 'mainapp/home.html')
+    else:
+        form = CommentForm()
+        return render(request, 'mainapp/comment.html', {'form': form})
 
 
 def look(request):
