@@ -16,9 +16,9 @@ class Comment(models.Model):
     user_id = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True)
     product_id = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True)
 
+    @property
     def __str__(self):
         return self.content
-
 
 
 class Product(models.Model):

@@ -40,8 +40,11 @@ def create(request):
 
 def comment(request):
     # print(Product.objects.get(id))
-    prod = get_object_or_404(Product, id)
-    print('*****', prod)
+    prod = request.GET.get('')
+
+
+    print(prod)
+
     if request.method == 'POST':
         form = CommentForm(request.POST)
 
@@ -49,7 +52,7 @@ def comment(request):
             comm = form.save(commit=False)
             comm.user_id = Profile.objects.get(user=request.user)
             print(comm, comm.user_id)
-            comm.product_id = prod.object.get(user=request.user)
+            comm.product_id = prod
             comm.save()
         return render(request, 'mainapp/home.html')
     else:

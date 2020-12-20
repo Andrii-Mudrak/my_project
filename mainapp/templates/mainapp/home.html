@@ -11,9 +11,10 @@
 
             {% for element in prod %}
         <div class="alert alert-primary" role="alert">
-            <p>{{ element.id}}**{{ element.title }} - {{ element.content }} - {{ element.author }} - {{ element.email }}</p>
-
-            <a href="/comment" class="alert-link">Коментувати</a>.
+            <p>{{ element.id }}**{{ element.title }} - {{ element.content }} - {{ element.author }} - {{ element.email }}</p>
+            {% if user.is_authenticated %}
+                <a href="/look/{{ element.id }}" class="alert-link">Дивитись детально тисни тут</a>
+            {% endif %}
         </div>
             {% endfor %}
 
