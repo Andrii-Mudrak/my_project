@@ -6,6 +6,7 @@ from .models import Comment, Product, Responce, Profile
 from .forms import SignUpForm, ProductForm, ProfileForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
 
 # from django.contrib.auth.decorators import login_required
 # from django.db import transaction
@@ -60,9 +61,13 @@ def comment(request):
         return render(request, 'mainapp/comment.html', {'form': form})
 
 
-def look(request):
-    count = User.objects.count()
-    return render(request, 'mainapp/look.html', {'count': count})
+def look(request, id='1'):
+    user = id
+    print(user)
+    HttpResponse('{}'.format(id))
+    prod = Product.objects.all()
+    prof = User.objects.all()
+    return render(request, 'mainapp/look.html', {'title': 'перелік', 'prod': prod, 'prof': prof})
 
 
 def done(request):
