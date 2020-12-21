@@ -62,12 +62,11 @@ def comment(request):
 
 
 def look(request, id='1'):
-    user = id
-    print(user)
-    HttpResponse('{}'.format(id))
-    prod = Product.objects.all()
-    prof = User.objects.all()
-    return render(request, 'mainapp/look.html', {'title': 'перелік', 'prod': prod, 'prof': prof})
+    # user = id
+    # # prod = Product.objects.all()
+    # prof = User.objects.all()
+    user_list = Product.objects.filter(id=id)
+    return render(request, 'mainapp/look.html', {'user_list': user_list})
 
 
 def done(request):

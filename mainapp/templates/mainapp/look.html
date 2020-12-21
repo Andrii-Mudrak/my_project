@@ -1,20 +1,12 @@
 {% extends 'mainapp/basic.html' %}
 
 {% block title %}
-перегляд відгуків username
+перегляд відгуків
 {% endblock %}
 
 {% block body %}
-<h1>перегляд відгуків {{ user }}   </h1>
-{{ 53 }}
-<a ping=geturl>
-    {% for element in prod %}
-        <div class="alert alert-primary" role="alert">
-            <p>{{ element.id }}**{{ element.title }} - {{ element.content }} - {{ element.author }} - {{ element.email }}</p>
-            {% if user.is_authenticated %}
-                <a href="/look/{{ element.id }}" class="alert-link">Дивитись детально тисни тут</a>
-            {% endif %}
-        </div>
-            {% endfor %}
+<h1>перегляд відгуків {{ user.username }}   </h1>
+    ....{{ user_list.title }}....
+
 
 {% endblock %}
