@@ -42,7 +42,7 @@ class ProfileForm(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': 'name'}), max_length=100)
     phone = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control', 'placeholder': 'phone'}), max_length=12)
+        'class': 'form-control', 'placeholder': 'Телефон'}), max_length=12)
 
     class Meta:
         model = Profile
@@ -50,8 +50,8 @@ class ProfileForm(forms.ModelForm):
 
 
 class CommentForm(forms.ModelForm):
-    content = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control', 'placeholder': 'content'}), max_length=400)
+    content = forms.CharField(widget=forms.Textarea(attrs={
+        'class': 'form-control', 'placeholder': 'Коментар'}), max_length=400)
 
     class Meta:
         model = Comment

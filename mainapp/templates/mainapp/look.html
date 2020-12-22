@@ -5,8 +5,24 @@
 {% endblock %}
 
 {% block body %}
-<h1>перегляд відгуків {{ user.username }}   </h1>
-    ....{{ user_list.title }}....
 
+    <ul class="list-group">
+        <li class="list-group-item active" aria-current="true"> Пропозиція {{ user.username }} </li>
+        <li class="list-group-item"><h4>Товар</h4>  {{ user_list.title }}</li>
+        <li class="list-group-item"><h4>Опис товару</h4> {{ user_list.content }}</li>
+    </ul>
 
+<p>
+<form method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+    <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+            {% if field.help_text %}
+                <small style="color: grey">{{ field.help_text }}</small>
+            {% endif %}
+        {% endfor %}
+    <button type="submit">Додати коментар</button>
+    </p>
 {% endblock %}

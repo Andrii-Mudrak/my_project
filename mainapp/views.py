@@ -21,8 +21,8 @@ def home(request):
 
 
 def list(request):
-    count = User.objects.count()
-    return render(request, 'mainapp/list.html', {'count': count})
+    # count = User.objects.count()
+    return render(request, 'mainapp/list.html', {'title': title, 'content': content, 'author_id': author_id})
 
 
 def create(request):
@@ -42,13 +42,8 @@ def create(request):
 def comment(request):
     # print(Product.objects.get(id))
     prod = request.GET.get('')
-
-
-    print(prod)
-
     if request.method == 'POST':
         form = CommentForm(request.POST)
-
         if form.is_valid() and request.user.is_authenticated:
             comm = form.save(commit=False)
             comm.user_id = Profile.objects.get(user=request.user)
@@ -62,11 +57,18 @@ def comment(request):
 
 
 def look(request, id='1'):
-    # user = id
-    # # prod = Product.objects.all()
-    # prof = User.objects.all()
-    user_list = Product.objects.filter(id=id)
-    return render(request, 'mainapp/look.html', {'user_list': user_list})
+    user_list = Product.objects.get(id=id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid() and request.user.is_authenticated:
+            comm = form.save(commit=False)
+            comm.user_id = Profile.objects.get(user=request.user)
+            comm.product_id = Product.objects.get(id=id)
+            comm.save()
+        return render(request, 'mainapp/home.html')
+    else:
+        form = CommentForm()
+    return render(request, 'mainapp/look.html', {'user_list': user_list, 'form': form})
 
 
 def done(request):
