@@ -1,9 +1,15 @@
 {% extends 'mainapp/basic.html' %}
 
 {% block title %}
-Перелік оголошень та пошуків
+Мої пропозиції
 {% endblock %}
 
 {% block body %}
-<h1>Перелік оголошень та пошуків</h1>
+<h1> Мої пропозиції </h1>
+
+    {% for element in prod %}
+        <p>{{ element.id }}**{{ element.title }} - {{ element.content }} - {{ element.author }} - {{ element.email }}</p>
+    {% endfor %}
+
+
 {% endblock %}

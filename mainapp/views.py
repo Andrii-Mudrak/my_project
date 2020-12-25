@@ -21,8 +21,9 @@ def home(request):
 
 
 def list(request):
-    # count = User.objects.count()
-    return render(request, 'mainapp/list.html', {'title': title, 'content': content, 'author_id': author_id})
+    prof_id = Profile.objects.get(user=request.user).id
+    prod = Product.objects.all().filter(author_id=prof_id)
+    return render(request, 'mainapp/list.html', {'prod': prod})
 
 
 def create(request):
@@ -40,7 +41,6 @@ def create(request):
 
 
 def comment(request):
-    # print(Product.objects.get(id))
     prod = request.GET.get('')
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -99,7 +99,6 @@ def product(request):
 
 
 def profile(request):
-    # return render(request, 'mainapp/home.html')
     if request.method == 'POST':
         form = ProfileForm(request.POST)
         if form.is_valid():

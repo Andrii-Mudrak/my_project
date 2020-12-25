@@ -7,7 +7,7 @@
 {% block body %}
 
     <ul class="list-group">
-        <li class="list-group-item active" aria-current="true"> Пропозиція {{ user.username }} </li>
+        <li class="list-group-item active" aria-current="true"> Пропозиція {{ user_list.author }}</li>
         <li class="list-group-item"><h4>Товар</h4>  {{ user_list.title }}</li>
         <li class="list-group-item"><h4>Опис товару</h4> {{ user_list.content }}</li>
     </ul>
