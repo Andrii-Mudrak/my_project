@@ -2,21 +2,23 @@
 {% block title %}Реєстрація{% endblock %}
 {% block body %}
 <h2>Реєстрація нового користувача</h2>
-<form method="POST">
+    <form method="POST">
     {% csrf_token %}
-    {% for field in form %}
-    <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-        <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
+    <form method="post" action="">
+        <dl class="register">
+            {% for field in form %}
+            <dt>{{ field.label_tag }}</dt>
+            <dd class="clearfix">{{ field }}
+                {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+                {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+            </dd>
+            {% endfor %}
+        </dl>
 
-    <p style="color: red">{{ error }}</p>
+    {% for field in profile_form %}
+        {{ field }}
+        <p> </p>
     {% endfor %}
-    </p>
-         {% endfor %}
     <button type="submit">Sign up</button>
 </form>
 {% endblock %}

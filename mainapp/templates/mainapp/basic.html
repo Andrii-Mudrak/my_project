@@ -3,31 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+          content = "width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{%  block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <!-- Custom styles for this template -->
-    <link href="product.css" rel="stylesheet">
-</head>
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+   .text {
+    text-align:  center;
+   }
+  </style>
+<body style="color:black">
+<div class="container">
+    <div class="text">
+        <p>
 
-<body>
+        {% if user.is_authenticated %}
+            <a class="btn btn-outline-primary" href="/look"><big>Перегляд</big></a>
+            <a class="btn btn-outline-primary" href="/home"><big>Головна</big></a>
+            <a class="btn btn-outline-primary" href="/list"><big>Перелік</big></a>
+            <a class="btn btn-outline-primary" href="/create"><big>Створення</big></a>
+            <a class="btn btn-outline-primary" href="/done"><big>Виконані</big></a>
+            <a class="btn btn-outline-primary" href="/comment"><big>Коментар</big></a>
+            <strong>Ви ввійшли як {{ user.username }}</strong>
+            <a class="btn btn-outline-primary" href="/password_change"><big>Змінити пароль</big></a>
+            <a class="btn btn-outline-primary" href="/logout"><big>Вихід</big></a>
 
-    <div class="d-flex d-flex justify-content-around align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
 
-        <a class="p-2 text-dark" href="/list"><h3>Перелік</h3></a>
-        <a class="p-2 text-dark" href="/create"><h3>Створення</h3></a>
-        <a class="p-2 text-dark" href="/comment"><h3>Коментар</h3></a>
-        <a class="p-2 text-dark" href="/look"><h3>Перегляд</h3></a>
-        <a class="p-2 text-dark" href="/done"><h3>Виконані</h3></a>
-        <a class="btn btn-outline-primary" href="/signup">Вхід</a>
-        <a class="btn btn-outline-primary" href="#">Коментар</a>
-        <a class="btn btn-outline-primary" href="#">Відклик</a>
-            </div>
-        </nav>
+        {% else %}
+            <a class="btn btn-outline-primary" href="/signup"><big>Реєстрація</big></a>
+            <a class="btn btn-outline-primary" href="/login"><big>Вхід</big></a>
+        {% endif %}
+        </div>
+     </div>
+{% block body %}
 
-{%  block body %}{% endblock %}
-
+{% endblock %}
 </body>
 </html>

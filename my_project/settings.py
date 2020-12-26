@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 import dj_database_url
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -56,7 +57,7 @@ ROOT_URLCONF = 'my_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'mainapp/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,22 +69,24 @@ TEMPLATES = [
         },
     },
 ]
-
 WSGI_APPLICATION = 'my_project.wsgi.application'
 
 
 # Database
-#https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-#DATABASES = dj_database_url.config('sqlite://:db.sqlite3:',conn_max_age=0)
-#DATABASES['default'] =  dj_database_url.config()
+# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# Password validation
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+DATABASES=dict()
+DATABASES['default'] = dj_database_url.config(default='sqlite:///./db.sqlite3')
+
+
+# Password validationp
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -120,3 +123,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGIN_REDIRECT_URL = '/home'
+# LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/home'
+
+#console only
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+

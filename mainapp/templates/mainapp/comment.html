@@ -1,9 +1,17 @@
 {% extends 'mainapp/basic.html' %}
 
 {% block title %}
-Коментарі
+{{ title }}
 {% endblock %}
 
 {% block body %}
-<h1>коментарі</h1>
+    <h1>коментарі</h1>
+    {% for element in comm %}
+        <div class="alert alert-info" role="alert">
+            <h3>{{ element.content }}</h3>
+            <p><b>Дата створення:</b>{{element.created_at}}
+                <b>Користувач:</b>{{element.user_id}}
+                <b>Опис:</b>{{element.product_id}}</p>
+        </div>
+    {% endfor %}
 {% endblock %}
