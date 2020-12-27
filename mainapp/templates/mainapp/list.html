@@ -8,7 +8,10 @@
 <h1> Мої пропозиції </h1>
 
     {% for element in prod %}
-        <p>{{ element.id }}**{{ element.title }} - {{ element.content }} - {{ element.author }} - {{ element.email }}</p>
+        <div class="alert alert-primary" style="width:600px; display: block; margin: 0 auto;
+        text-align:center" role="alert">
+            <p>{{ element.id }}**{{ element.title }} - {{ element.content }} - {{ element.author }} - {{ element.email }}</p>
+        </div>
     {% endfor %}
 
 

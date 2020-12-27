@@ -1,14 +1,10 @@
 from django.shortcuts import render, redirect
 # from django.views.generic import ListView, DetailView
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-from .models import Comment, Product, Responce, Profile
+# from django.contrib.auth.forms import UserCreationForm
+from .models import Product, Profile
 from .forms import SignUpForm, ProductForm, ProfileForm, CommentForm
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponse
-
-# from django.contrib.auth.decorators import login_required
 # from django.db import transaction
 # Create your views here.
 
@@ -20,7 +16,7 @@ def home(request):
     return render(request, 'mainapp/home.html', {'title': 'перелік', 'prod': prod, 'prof': prof, 'count': count})
 
 
-def list(request):
+def list_p(request):
     prof_id = Profile.objects.get(user=request.user).id
     prod = Product.objects.all().filter(author_id=prof_id)
     return render(request, 'mainapp/list.html', {'prod': prod})
@@ -56,6 +52,7 @@ def comment(request):
         return render(request, 'mainapp/comment.html', {'form': form})
 
 
+@login_required()
 def look(request, id='1'):
     user_list = Product.objects.get(id=id)
     if request.method == 'POST':

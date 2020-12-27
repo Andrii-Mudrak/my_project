@@ -1,28 +1,29 @@
 {% extends 'mainapp/basic.html' %}
 
 {% block title %}
-перегляд відгуків
+Перегляд відгуків
 {% endblock %}
 
 {% block body %}
 
-    <ul class="list-group">
+    <ul class="list-group" style="height:200px;width:600px; display: block; margin: 0 auto; text-align:center">
         <li class="list-group-item active" aria-current="true"> Пропозиція {{ user_list.author }}</li>
         <li class="list-group-item"><h4>Товар</h4>  {{ user_list.title }}</li>
         <li class="list-group-item"><h4>Опис товару</h4> {{ user_list.content }}</li>
     </ul>
 
-<p>
+<p></p>
 <form method="POST">
     {% csrf_token %}
     {% for field in form %}
     <p>
-        {{ field.label_tag }}<br>
+<div style="height:200px;width:600px; display: block; margin: 0 auto;
+        text-align:center">
         {{ field }}
-            {% if field.help_text %}
-                <small style="color: grey">{{ field.help_text }}</small>
-            {% endif %}
-        {% endfor %}
-    <button type="submit">Додати коментар</button>
+</div>
     </p>
+        {% endfor %}
+
+    <button style="text-align:center; margin: 0 auto; display: block" type="submit">Додати коментар</button>
+
 {% endblock %}
