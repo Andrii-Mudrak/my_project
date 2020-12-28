@@ -1,8 +1,6 @@
 from django.db import models
-from django.conf import settings
 from django.core.validators import MinLengthValidator, int_list_validator
-from datetime import datetime, timedelta
-from django.forms import ModelForm
+from datetime import datetime
 from django.contrib.auth.models import User
 
 

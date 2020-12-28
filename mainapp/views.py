@@ -1,11 +1,8 @@
 from django.shortcuts import render, redirect
-# from django.views.generic import ListView, DetailView
 from django.contrib.auth.models import User
-# from django.contrib.auth.forms import UserCreationForm
 from .models import Product, Profile
 from .forms import SignUpForm, ProductForm, ProfileForm, CommentForm
 from django.contrib.auth.decorators import login_required
-# from django.db import transaction
 # Create your views here.
 
 
@@ -91,8 +88,10 @@ def signup(request):
         return render(request, 'mainapp/signup.html', {'form': form, 'profile_form': profile_form})
 
 
-def product(request):
-    return render(request, 'mainapp/product.html')
+def product(request,id='1'):
+    prod = Product.objects.get(id=id)
+    prod.delete()
+    return render(request, 'mainapp/home.html')
 
 
 def profile(request):

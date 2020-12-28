@@ -2,12 +2,9 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Product, Profile, Comment
-from datetime import datetime, timedelta
 
 
 class SignUpForm(UserCreationForm):
-    # user = forms.CharField(widget=forms.TextInput(attrs={
-    #     'class': 'form-control', 'placeholder': 'Username'}))
     first_name = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': 'First Name'}), max_length=32)
     last_name = forms.CharField(widget=forms.TextInput(attrs={
@@ -56,5 +53,3 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
-
-
