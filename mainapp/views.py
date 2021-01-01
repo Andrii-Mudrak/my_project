@@ -3,12 +3,13 @@ from django.contrib.auth.models import User
 from .models import Product, Profile
 from .forms import SignUpForm, ProductForm, ProfileForm, CommentForm
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 # Create your views here.
 
 
 def home(request):
     count = User.objects.count()
-    prod = Product.objects.all()
+    prod = Product.objects.all().filter(is_active=True)
     prof = User.objects.all()
     return render(request, 'mainapp/home.html', {'title': 'перелік', 'prod': prod, 'prof': prof, 'count': count})
 
@@ -65,9 +66,9 @@ def look(request, id='1'):
     return render(request, 'mainapp/look.html', {'user_list': user_list, 'form': form})
 
 
-def done(request):
-    count = User.objects.count()
-    return render(request, 'mainapp/done.html', {'count': count})
+# def done(request):
+#     count = User.objects.count()
+#     return render(request, 'mainapp/done.html', {'count': count})
 
 
 def signup(request):
@@ -90,7 +91,10 @@ def signup(request):
 
 def product(request,id='1'):
     prod = Product.objects.get(id=id)
-    prod.delete()
+    # prod.delete() # видалення запису з бази даних повністю
+    prod.is_active = False
+    prod.deleted_at = datetime.utcnow()
+    prod.save()
     return render(request, 'mainapp/home.html')
 
 
@@ -103,3 +107,24 @@ def profile(request):
     else:
         form = ProfileForm()
         return render(request, 'mainapp/profile.html', {'form': form})
+
+
+def done(request):
+    prof_id = Profile.objects.get(user=request.user).id
+    prod = Product.objects.all().filter(author_id=prof_id, is_active=False)
+    return render(request, 'mainapp/done.html', {'prod': prod})
+
+
+def restore(request,id='1'):
+    prod = Product.objects.get(id=id)
+    # prod.delete() # видалення запису з бази даних повністю
+    prod.is_active = True
+    prod.save()
+    return render(request, 'mainapp/home.html')
+
+
+def delete(request,id='1'):
+    prod = Product.objects.get(id=id)
+    prod.delete() # видалення запису з бази даних повністю
+    prod.save()
+    return render(request, 'mainapp/home.html')

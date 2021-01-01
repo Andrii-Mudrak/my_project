@@ -5,5 +5,13 @@
 {% endblock %}
 
 {% block body %}
-<h1>Завершені угоди</h1>
+<h1>Мої завершені угоди</h1>
+    {% for element in prod %}
+        <div class="alert alert-primary" style="width:1000px; display: block; margin: 0 auto;
+            text-align:left" role="alert">
+            {{ element.id }}**{{ element.title }} - {{ element.content }} - {{ element.author }} - {{ element.email }}
+            <a class="btn btn-outline-primary" style="margin-right: 0 auto" href="/restore/{{ element.id }}">Відновити</a>
+            <a class="btn btn-outline-primary" style="margin-right: 0 auto" href="/delete/{{ element.id }}">Видалити</a></div>
+        <p></p>
+    {% endfor %}
 {% endblock %}

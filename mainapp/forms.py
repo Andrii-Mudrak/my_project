@@ -5,12 +5,6 @@ from .models import Product, Profile, Comment
 
 
 class SignUpForm(UserCreationForm):
-    first_name = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control', 'placeholder': 'First Name'}), max_length=32)
-    last_name = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control', 'placeholder': 'Last Name'}), max_length=32)
-    email = forms.EmailField(widget=forms.EmailInput(attrs={
-        'class': 'form-control', 'placeholder': 'Enter a valid email'}), max_length=64)
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control', 'placeholder': 'Password'}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
@@ -19,7 +13,7 @@ class SignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
         # I've tried both of these 'fields' declaration, result is the same
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+        fields = ['username', 'password1', 'password2']
         # fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'email')
 
 
@@ -38,12 +32,18 @@ class ProductForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': 'name'}), max_length=100)
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'First Name'}), max_length=32)
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Last Name'}), max_length=32)
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class': 'form-control', 'placeholder': 'Enter a valid email'}), max_length=64)
     phone = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': 'Телефон'}), max_length=12)
 
     class Meta:
         model = Profile
-        fields = ['name', 'phone']
+        fields = ['name', 'first_name', 'last_name', 'email', 'phone']
 
 
 class CommentForm(forms.ModelForm):

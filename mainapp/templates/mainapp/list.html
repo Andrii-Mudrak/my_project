@@ -6,13 +6,15 @@
 
 {% block body %}
 <h1> Мої пропозиції </h1>
-
     {% for element in prod %}
+        {% if element.is_active == True %}
         <div class="alert alert-primary" style="width:600px; display: block; margin: 0 auto;
         text-align:center" role="alert">
-            <p>{{ element.id }}**{{ element.title }} - {{ element.content }} - {{ element.author }} - {{ element.email }}</p>
+            {{ element.id }}**{{ element.title }} - {{ element.content }} - {{ element.author }} - {{ element.email }}
             <a class="btn btn-outline-primary"  href="/product/{{ element.id }}">Видалити?</a>
         </div>
+        <p></p>
+        {% endif %}
     {% endfor %}
 
 

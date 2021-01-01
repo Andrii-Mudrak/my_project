@@ -14,4 +14,6 @@ urlpatterns = [
     path('look/<id>/', views.look),
     path('done', views.done),
     path('signup', views.signup, name='signup'),
+    path('restore/<id>/', views.restore),
+    path('delete/<id>/', views.delete),
 ]

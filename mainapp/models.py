@@ -47,7 +47,9 @@ class Responce(models.Model):
 class Profile(models.Model):
     id = models.BigAutoField(primary_key=True)
     name = models.CharField('name', max_length=100, blank=False)
-    # phone = models.C('phone', blank=False, decimal_places=12, max_digits=12)  # this is without default phone number
+    first_name = models.CharField('First name', max_length=32, default='First name')
+    last_name = models.CharField('Last name', max_length=32, default='Last name')
+    email = models.CharField('email', max_length=40, default='1@get.com')
     phone = models.CharField('phone', max_length=12, blank=False,
                              validators=[int_list_validator(sep=''),
                                          MinLengthValidator(7)],
