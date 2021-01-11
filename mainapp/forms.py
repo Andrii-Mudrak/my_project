@@ -6,22 +6,21 @@ from .models import Product, Profile, Comment
 
 class SignUpForm(UserCreationForm):
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-control', 'placeholder': 'Password'}))
+        'class': 'special', 'placeholder': 'Пароль'}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-control', 'placeholder': 'Password Again'}))
+        'class': 'special', 'placeholder': 'Підтвердити пароль'}))
 
     class Meta(UserCreationForm.Meta):
         model = User
         # I've tried both of these 'fields' declaration, result is the same
         fields = ['username', 'password1', 'password2']
-        # fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'email')
 
 
 class ProductForm(forms.ModelForm):
     title = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control', 'placeholder': 'Заголовок'}), max_length=100)
+        'class': 'special', 'placeholder': 'Заголовок'}), max_length=100)
     content = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control', 'placeholder': 'Опис'}), max_length=400)
+        'class': 'special', 'placeholder': 'Опис'}), max_length=400)
 
     class Meta:
         model = Product
@@ -30,25 +29,25 @@ class ProductForm(forms.ModelForm):
 
 
 class ProfileForm(forms.ModelForm):
-    name = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control', 'placeholder': 'name'}), max_length=100)
+    # name = forms.CharField(widget=forms.TextInput(attrs={
+    #     'class': 'special', 'placeholder': 'name'}), max_length=100)
     first_name = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control', 'placeholder': 'First Name'}), max_length=32)
+        'class': 'special', 'placeholder': 'Ім`я'}), max_length=32)
     last_name = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control', 'placeholder': 'Last Name'}), max_length=32)
+        'class': 'special', 'placeholder': 'Прізвище'}), max_length=32)
     email = forms.EmailField(widget=forms.EmailInput(attrs={
-        'class': 'form-control', 'placeholder': 'Enter a valid email'}), max_length=64)
+        'class': 'special', 'placeholder': 'Електронна пошта'}), max_length=64)
     phone = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control', 'placeholder': 'Телефон'}), max_length=12)
+        'class': 'special', 'placeholder': '+380671234567'}), max_length=14)
 
     class Meta:
         model = Profile
-        fields = ['name', 'first_name', 'last_name', 'email', 'phone']
+        fields = ['first_name', 'last_name', 'email', 'phone']
 
 
 class CommentForm(forms.ModelForm):
     content = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control', 'placeholder': 'Ваш коментар'}), max_length=400)
+        'class': 'special', 'placeholder': 'Ваш коментар'}), max_length=400)
 
     class Meta:
         model = Comment

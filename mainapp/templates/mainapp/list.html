@@ -10,11 +10,22 @@
         {% if element.is_active == True %}
         <div class="alert alert-primary" style="width:600px; display: block; margin: 0 auto;
         text-align:center" role="alert">
-            {{ element.id }}**{{ element.title }} - {{ element.content }} - {{ element.author }} - {{ element.email }}
+            {{ element.id }}**{{ element.title }} - {{ element.content }} - {{ element.author }}
+            <p></p>
+            <strong>Коментарі</strong>  <p></p>
+            {% for item in com.element %}
+                {{ item.content }} --- {{ item.user_id }}
+                465654
+                <p></p>
+
+            {% endfor %}
+
             <a class="btn btn-outline-primary"  href="/product/{{ element.id }}">Видалити?</a>
         </div>
+
         <p></p>
         {% endif %}
+
     {% endfor %}
 
 
