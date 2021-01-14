@@ -3,11 +3,14 @@
 {% block title %}Створення оголошення{% endblock %}
 
 {% block body %}
+<div class="alert alert-primary" style="width:600px; display: block; margin: 0 auto;
+        text-align:center" role="alert">
+    <strong>Моє нове оголошення</strong>
 <form method="POST">
     {% csrf_token %}
     {% for field in form %}
     <p>
-        {{ field.label_tag }}<br>
+<!--        {{ field.label_tag }}<br>-->
         {{ field }}
         {% if field.help_text %}
         <small style="color: grey">{{ field.help_text }}</small>
@@ -16,8 +19,9 @@
 
     <p> style="color: red">{{ error }}</p>
         {% endfor %}
-
+<p></p>
     {% endfor %}
-    <button type="submit">Add</button>
+    <button type="submit">Додати оголошення</button>
+</div>
 </form>
 {% endblock %}

@@ -13,6 +13,7 @@ class Comment(models.Model):
     deleted_at = models.DateTimeField('deleted_at', null=True)
     user_id = models.ForeignKey('Profile', on_delete=models.CASCADE, null=True)
     product_id = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True)
+    revised = models.BooleanField('revised', default=False)
 
     @property
     def __str__(self):

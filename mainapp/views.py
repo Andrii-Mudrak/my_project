@@ -17,9 +17,10 @@ def home(request):
 
 def list_p(request):
     prof_id = Profile.objects.get(user=request.user).id
-    prod = Product.objects.filter(author_id=prof_id).all()
-    com = Comment.objects.filter(user_id=prof_id).all()
-    return render(request, 'mainapp/list.html', {'prod': prod, 'com': com})
+    prod = Product.objects.filter(author_id=prof_id)
+    # com = Comment.objects.filter(user_id=prof_id).get()
+    print(prof_id, prod)
+    return render(request, 'mainapp/list.html', {'prod': prod})
 
 
 def create(request):
@@ -36,7 +37,8 @@ def create(request):
         return render(request, 'mainapp/create.html', {'form': form})
 
 
-def comment(request):
+def comment(request, id=int):
+    ''' стара форма. хай полежить
     if request.method == 'POST' and request.user.is_authenticated:
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -44,8 +46,11 @@ def comment(request):
             comm.save()
         return render(request, 'mainapp/home.html')
     else:
-        form = CommentForm()
-        return render(request, 'mainapp/comment.html', {'form': form})
+        form = CommentForm()'''
+    prod = Product.objects.get(id=id)
+    comm = Comment.objects.filter(product_id=id)
+    print(prod.id, prod.title, prod.content)
+    return render(request, 'mainapp/comment.html', {'comm': comm, 'prod': prod})
 
 
 @login_required()

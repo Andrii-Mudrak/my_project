@@ -9,6 +9,7 @@
             <strong>Автор пропозиції</strong> {{ element.author }} <p></p>
             {% if user.is_authenticated %}
                 <a class="btn btn-outline-primary"  href="/look/{{ element.id }}">Додати коментар</a>
+                <a class="btn btn-outline-primary"  href="#">Зробити пропозицію</a>
             {% endif %}
         </div>
             <p></p>
