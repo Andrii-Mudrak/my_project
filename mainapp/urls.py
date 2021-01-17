@@ -16,4 +16,5 @@ urlpatterns = [
     path('signup', views.signup, name='signup'),
     path('restore/<id>/', views.restore),
     path('delete/<id>/', views.delete),
+    path('revised/<id>/', views.revised),
 ]

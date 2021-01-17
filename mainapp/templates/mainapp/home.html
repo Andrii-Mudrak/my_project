@@ -1,6 +1,7 @@
 {% extends 'mainapp/basic.html' %}
 {% block title %}Домашня сторінка{% endblock %}
 {% block body %}
+{{comm.id}}
             {% for element in prod %}
                 <div class="alert alert-primary" style="width:600px; display: block; margin: 0 auto;
         text-align:center" role="alert">
@@ -9,7 +10,6 @@
             <strong>Автор пропозиції</strong> {{ element.author }} <p></p>
             {% if user.is_authenticated %}
                 <a class="btn btn-outline-primary"  href="/look/{{ element.id }}">Додати коментар</a>
-                <a class="btn btn-outline-primary"  href="#">Зробити пропозицію</a>
             {% endif %}
         </div>
             <p></p>

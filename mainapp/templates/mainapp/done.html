@@ -1,11 +1,8 @@
 {% extends 'mainapp/basic.html' %}
 
-{% block title %}
-Завершені угоди
-{% endblock %}
+{% block title %}Мої завершені угоди{% endblock %}
 
 {% block body %}
-<h1>Мої завершені угоди</h1>
     {% for element in prod %}
         <div class="alert alert-primary" style="width:1000px; display: block; margin: 0 auto;
             text-align:left" role="alert">

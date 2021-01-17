@@ -9,10 +9,10 @@ from django.shortcuts import get_object_or_404
 
 
 def home(request):
-    count = User.objects.count()
+    # count = User.objects.count()
     prod = Product.objects.filter(is_active=True).all()
     prof = Profile.objects.filter(id=prod).all()
-    return render(request, 'mainapp/home.html', {'title': 'перелік', 'prod': prod, 'prof': prof, 'count': count})
+    return render(request, 'mainapp/home.html', {'title': 'перелік', 'prod': prod, 'prof': prof})
 
 
 def list_p(request):
@@ -129,3 +129,10 @@ def delete(request,id=int):
     prod.delete() # видалення запису з бази даних повністю
     prod.save()
     return render(request, 'mainapp/home.html')
+
+
+def revised(request, id=int):
+    comm = Comment.objects.get(id=id)
+    comm.revised = True
+    comm.save()
+    return render(request, 'mainapp/list.html')
