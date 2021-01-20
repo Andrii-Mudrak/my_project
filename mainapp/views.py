@@ -38,15 +38,6 @@ def create(request):
 
 
 def comment(request, id=int):
-    ''' стара форма. хай полежить
-    if request.method == 'POST' and request.user.is_authenticated:
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comm.user_profile = request.user.profile
-            comm.save()
-        return render(request, 'mainapp/home.html')
-    else:
-        form = CommentForm()'''
     prod = Product.objects.get(id=id)
     comm = Comment.objects.filter(product_id=id)
     print(prod.id, prod.title, prod.content)

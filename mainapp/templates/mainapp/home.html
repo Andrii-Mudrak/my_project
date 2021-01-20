@@ -8,9 +8,9 @@
             <strong>Найменування</strong> {{ element.title }} <p></p>
             <strong>Опис</strong> {{ element.content }} <p></p>
             <strong>Автор пропозиції</strong> {{ element.author }} <p></p>
-            {% if user.is_authenticated %}
-                <a class="btn btn-outline-primary"  href="/look/{{ element.id }}">Додати коментар</a>
-            {% endif %}
+                {% if user.is_authenticated %}
+                    <a class="btn btn-outline-primary"  href="/look/{{ element.id }}">Додати коментар</a>
+                {% endif %}
         </div>
             <p></p>
             {% endfor %}
