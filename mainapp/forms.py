@@ -21,11 +21,12 @@ class ProductForm(forms.ModelForm):
         'class': 'special', 'placeholder': 'Заголовок'}), max_length=100)
     content = forms.CharField(widget=forms.Textarea(attrs={
         'class': 'special', 'placeholder': 'Опис'}), max_length=400)
+    # image = forms.ImageField(widget=forms.FileInput(attrs={'class':'special'}))
 
     class Meta:
         model = Product
     #     # I've tried both of these 'fields' declaration, result is the same
-        fields = ['title', 'content']
+        fields = ['title', 'content', 'image']
 
 
 class ProfileForm(forms.ModelForm):
