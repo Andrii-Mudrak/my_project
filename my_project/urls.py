@@ -27,4 +27,4 @@ urlpatterns = [
     path('password_change/', include('django.contrib.auth.urls')),
     # path(r'^accounts/login/$', include('django.contrib.auth.views.login'), {'template_name': 'mainapp/login.html'}),
     path('', include('mainapp.urls')),
-]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

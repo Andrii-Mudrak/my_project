@@ -19,17 +19,20 @@ def list_p(request):
     prof_id = Profile.objects.get(user=request.user).id
     prod = Product.objects.filter(author_id=prof_id)
     # com = Comment.objects.filter(user_id=prof_id).get()
-    print(prof_id, prod)
+    # print(prof_id, prod)
+    # print(prod.)
     return render(request, 'mainapp/list.html', {'prod': prod})
 
 
 def create(request):
     if request.method == 'POST':
-        form = ProductForm(request.POST)
+        form = ProductForm(request.POST, request.FILES)
+        print(form.is_valid())
         if form.is_valid() and request.user.is_authenticated:
             prod = form.save(commit=False)
             prod.is_active = 1
             prod.author = Profile.objects.get(user=request.user)
+            image = form.instance
             prod.save()
         return render(request, 'mainapp/home.html')
     else:

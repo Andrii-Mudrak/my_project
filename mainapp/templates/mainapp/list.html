@@ -14,10 +14,10 @@
             <a class="btn btn-outline-primary"  href="/comment/{{ element.id }}">Подробиці</a>
             <a class="btn btn-outline-primary"  href="/product/{{ element.id }}">Видалити?</a>
         </div>
-
+<!--            {{ element.image.url }}<br></br>-->
         <p></p>
         {% endif %}
-
+             <img src="{{ element.image }}">
     {% endfor %}
 
 
