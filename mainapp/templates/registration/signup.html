@@ -1,11 +1,15 @@
 {% extends 'mainapp/basic.html' %}
 
 {% block body%}
+
 <h2>Sign Up </h2>
 <form method="post">
-    {% csrf_token %}
+    {% csrf_token % }
+    <div style="width:600px; display: block; margin: 0 auto;
+        text-align:center">
     {{ form.as_p }}
 
     <button type="submit">Реєстрація</button>
+    </div>
 </form>
 {% endblock %}

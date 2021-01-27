@@ -1,24 +1,28 @@
 {% extends 'mainapp/basic.html' %}
-{% block title %}Реєстрація{% endblock %}
+{% block title %}Реєстрація нового користувача{% endblock %}
 {% block body %}
-<h2>Реєстрація нового користувача</h2>
     <form method="POST">
     {% csrf_token %}
     <form method="post" action="">
         <dl class="register">
+            <div class="alert alert-warning" style="width:600px; display: block; margin: 0 auto;
+        text-align:center" role="alert">
             {% for field in form %}
-            <dt>{{ field.label_tag }}</dt>
+<!--            <dt>{{ field.label_tag }}</dt>-->
             <dd class="clearfix">{{ field }}
                 {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
                 {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
             </dd>
             {% endfor %}
+            {% for field in profile_form %}
+<!--            <dt>{{ field.label_tag }}</dt>-->
+            <dd class="clearfix">{{ field }}
+                {% if field.help_text %}<div class="clearfix">{{ field.help_text }}</div>{% endif %}
+                {% if field.errors %}<div class="myerrors clearfix">{{ field.errors }}</div>{% endif %}
+            </dd>
+            {% endfor %}
+        <button type="submit">Внести в базу нового користувача</button>
+            </div>
         </dl>
-
-    {% for field in profile_form %}
-        {{ field }}
-        <p> </p>
-    {% endfor %}
-    <button type="submit">Sign up</button>
 </form>
 {% endblock %}

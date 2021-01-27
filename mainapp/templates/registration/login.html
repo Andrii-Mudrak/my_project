@@ -3,11 +3,15 @@
 {% block title %}Вхід{% endblock %}
 
 {% block body %}
-<h2>Log in</h2>
+
 <form method = "post">
     {% csrf_token %}
+    <div style="width:600px; display: block; margin: 0 auto;
+        text-align:center">
+        <h2>Вхід</h2>
     {{ form.as_p }}
     <button type="submit">Вхід</button>
     <a href="/password_reset">Забули пароль?</a>
+    </div>
 </form>
 {% endblock %}

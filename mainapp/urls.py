@@ -1,18 +1,19 @@
 from django.urls import path, include
 from . import views
-# from .views import ArticleDetailView
-# from django.views.generic import TemplateView
+
 
 urlpatterns = [
     path('', views.home),
     path('', include('django.contrib.auth.urls')),
-    path('product', views.product),
+    path('product/<id>/', views.product),
     path('home', views.home),
-    path('list', views.list),
+    path('list_p', views.list_p),
     path('profile', views.profile),
     path('create', views.create, name='create'),
-    path('comment', views.comment),
-    # path('look', HomeView.as_view(template_name="mainapp/home.html")),
+    path('comment/<id>/', views.comment),
+    path('look/<id>/', views.look),
     path('done', views.done),
     path('signup', views.signup, name='signup'),
+    path('restore/<id>/', views.restore),
+    path('delete/<id>/', views.delete),
 ]

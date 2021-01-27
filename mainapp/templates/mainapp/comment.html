@@ -1,17 +1,35 @@
 {% extends 'mainapp/basic.html' %}
 
-{% block title %}
-{{ title }}
+{% block title %} Коментар {{ title }}
 {% endblock %}
-
 {% block body %}
-    <h1>коментарі</h1>
-    {% for element in comm %}
-        <div class="alert alert-info" role="alert">
-            <h3>{{ element.content }}</h3>
-            <p><b>Дата створення:</b>{{element.created_at}}
-                <b>Користувач:</b>{{element.user_id}}
-                <b>Опис:</b>{{element.product_id}}</p>
-        </div>
-    {% endfor %}
+<form method="POST">
+    {% csrf_token %}
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Опис</th>
+                <th scope="col">Продукт</th>
+                <th scope="col">Коментар</th>
+                <th scope="col">Автор коментаря</th>
+                <th scope="col">Дата написання</th>
+                <th scope="col">Статус</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for element in comm %}
+            <tr>
+                <th scope="row">{{ prod.title }}</th>
+                <td>{{ prod.content }}</td>
+                <td>{{ element.content }}</td>
+                <td>{{ element.user_id }}</td>
+                <td>{{ element.created_at }}</td>
+                {% ifequal element.revised True %}
+                    <td>Переглянуто</td>
+                {% else %}
+                    <td><button class="btn btn-link">Переглянути</td>
+                {% endifequal %}
+            </tr>
+        {% endfor %}
+        </tbody>
 {% endblock %}
