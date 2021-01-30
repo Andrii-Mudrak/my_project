@@ -18,6 +18,7 @@ def home(request):
 def list_p(request):
     prof_id = Profile.objects.get(user=request.user).id
     prod = Product.objects.filter(author_id=prof_id)
+    # print(prod.image)
     # com = Comment.objects.filter(user_id=prof_id).get()
     # print(prof_id, prod)
     # print(prod.)
@@ -32,8 +33,8 @@ def create(request):
             prod = form.save(commit=False)
             prod.is_active = 1
             prod.author = Profile.objects.get(user=request.user)
-            image = form.instance
             prod.save()
+            prod.image = form.instance
         return render(request, 'mainapp/home.html')
     else:
         form = ProductForm()

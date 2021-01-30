@@ -27,7 +27,7 @@ class Product(models.Model):
     deleted_at = models.DateTimeField('deleted_at', null=True)
     is_active = models.BooleanField('is_active', default=True)
     author = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True)
-    image = models.ImageField(null=True, blank=True, upload_to="images/")
+    image = models.ImageField(null=True, blank=True, upload_to="media/images/")
 
     def __str__(self):
         return self.content
