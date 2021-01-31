@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
 from .models import Product, Profile, Comment
 from .forms import SignUpForm, ProductForm, ProfileForm, CommentForm
 from django.contrib.auth.decorators import login_required
@@ -9,19 +8,15 @@ from django.shortcuts import get_object_or_404
 
 
 def home(request):
-    # count = User.objects.count()
-    prod = Product.objects.filter(is_active=True).all()
-    prof = Profile.objects.filter(id=prod).all()
-    return render(request, 'mainapp/home.html', {'title': 'перелік', 'prod': prod, 'prof': prof})
+    prod = Product.objects.all()
+    # prof = Profile.objects.all()
+    # return render(request, 'mainapp/home.html', {'title': 'перелік', 'prod': prod, 'prof': prof})
+    return render(request, 'mainapp/home.html', {'prod': prod})
 
 
 def list_p(request):
     prof_id = Profile.objects.get(user=request.user).id
     prod = Product.objects.filter(author_id=prof_id)
-    # print(prod.image)
-    # com = Comment.objects.filter(user_id=prof_id).get()
-    # print(prof_id, prod)
-    # print(prod.)
     return render(request, 'mainapp/list.html', {'prod': prod})
 
 
@@ -35,7 +30,7 @@ def create(request):
             prod.author = Profile.objects.get(user=request.user)
             prod.save()
             prod.image = form.instance
-        return render(request, 'mainapp/home.html')
+        return  redirect('/home')
     else:
         form = ProductForm()
         return render(request, 'mainapp/create.html', {'form': form})
@@ -59,7 +54,7 @@ def look(request, id=int):
             comm.user_id = Profile.objects.get(user=request.user)
             comm.product_id = Product.objects.get(id=id)
             comm.save()
-        return render(request, 'mainapp/home.html')
+        return  redirect('/home')
     else:
         form = CommentForm()
     return render(request, 'mainapp/look.html', {'user_list': user_list, 'form': form})
@@ -78,7 +73,7 @@ def signup(request):
             profile.name = profile.user
             profile.save()
         # context = {'form': form, 'profile_form': profile_form}
-        return render(request, 'mainapp/home.html')
+        return  redirect('/home')
     else:
         form = SignUpForm()
         profile_form = ProfileForm()
@@ -91,7 +86,7 @@ def product(request,id=int):
     prod.is_active = False
     prod.deleted_at = datetime.utcnow()
     prod.save()
-    return render(request, 'mainapp/home.html')
+    return  redirect('/home')
 
 
 def profile(request):
@@ -116,18 +111,18 @@ def restore(request,id=int):
     # prod.delete() # видалення запису з бази даних повністю
     prod.is_active = True
     prod.save()
-    return render(request, 'mainapp/home.html')
+    return  redirect('/home')
 
 
 def delete(request,id=int):
     prod = Product.objects.get(id=id)
     prod.delete() # видалення запису з бази даних повністю
     prod.save()
-    return render(request, 'mainapp/home.html')
+    return  redirect('/home')
 
 
 def revised(request, id=int):
     comm = Comment.objects.get(id=id)
     comm.revised = True
     comm.save()
-    return render(request, 'mainapp/list.html')
+    return  redirect('/home')

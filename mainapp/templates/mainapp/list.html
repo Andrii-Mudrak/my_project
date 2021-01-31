@@ -1,8 +1,6 @@
 {% extends 'mainapp/basic.html' %}
 
-{% block title %}
-Мої пропозиції
-{% endblock %}
+{% block title %}Мої пропозиції{% endblock %}
 
 {% block body %}
 {% load static %}
@@ -10,9 +8,10 @@
         {% if element.is_active == True %}
         <div class="alert alert-primary" style="width:600px; display: block; margin: 0 auto;
         text-align:center" role="alert">
-            {{ element.id }}**{{ element.title }} - {{ element.content }} - {{ element.author }}
-
-            <p></p><img src="{{ element.image }}"><p></p>
+            {{ element.title }} - {{ element.content }} - {{ element.author }}
+            {{ element.image.url }}
+            <p></p><img src="{{ element.image.url }}" style="width:200px; display: block; margin: 0 auto;
+        text-align:center"><p></p>
             <a class="btn btn-outline-primary"  href="/comment/{{ element.id }}">Подробиці</a>
             <a class="btn btn-outline-primary"  href="/product/{{ element.id }}">Видалити?</a>
         </div>
