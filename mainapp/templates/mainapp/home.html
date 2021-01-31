@@ -9,6 +9,8 @@
                 <strong>Найменування</strong> {{ element.title }} <p></p>
                 <strong>Опис</strong> {{ element.content }} <p></p>
                 <strong>Автор пропозиції</strong> {{ element.author }} <p></p>
+                    <p></p><img src="{{ element.image.url }}" style="width:200px; display: block; margin: 0 auto;
+        text-align:center"><p></p>
                     {% if user.is_authenticated %}
                         <a class="btn btn-outline-primary"  href="/look/{{ element.id }}">Додати коментар</a>
                     {% endif %}
