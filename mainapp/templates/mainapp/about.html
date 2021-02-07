@@ -1,0 +1,18 @@
+{% extends 'mainapp/basic.html' %}
+{% block title %} Детально про акаунт {% endblock %}
+
+{% block body %}
+{% load static %}
+    {% for  element in prof %}
+<div class="alert alert-primary" style="width:600px; display: block; margin: 0 auto;
+        text-align:left" role="alert">
+        <strong>Ім'я </strong>{{ element.first_name }} <p></p>
+        <strong>Прізвище </strong>{{ element.last_name }} <p></p>
+        <strong>Телефон </strong>{{ element.phone }} <p></p>
+        <strong>Ел.Пошта </strong>{{ element.email }} <p></p>
+    <a class="btn btn-outline-primary"  href="/delete_account"> Видалити </a>
+
+</div>
+    {% endfor %}
+
+{% endblock %}
