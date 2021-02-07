@@ -23,13 +23,13 @@
         <p>
 
         {% if user.is_authenticated %}
-            <a class="btn btn-outline-primary" href="/home"><big>Головна</big></a>
-            <a class="btn btn-outline-primary" href="/list_p"><big>Мої пропозиції</big></a>
-            <a class="btn btn-outline-primary" href="/create"><big>Створення</big></a>
-            <a class="btn btn-outline-primary" href="/done"><big>Завершені</big></a>
-            <strong>Ви ввійшли як {{ user.username }}</strong>
-            <a class="btn btn-outline-primary" href="/password_change"><big>Змінити пароль</big></a>
-            <a class="btn btn-outline-primary" href="/logout"><big>Вихід</big></a>
+            <a class="btn btn-primary" href="/home"><big>Головна</big></a>
+            <a class="btn btn-primary" href="/list_p"><big>Мої пропозиції</big></a>
+            <a class="btn btn-primary" href="/create"><big>Створення</big></a>
+            <a class="btn btn-primary" href="/done"><big>Завершені</big></a>
+            <a class="btn btn-success" href="/about"><big>Ви ввійшли як {{ user.username }}</big></a>
+            <a class="btn btn-primary" href="/password_change"><big>Змінити пароль</big></a>
+            <a class="btn btn-primary" href="/logout"><big>Вихід</big></a>
 
         {% else %}
             <a class="btn btn-outline-primary" href="/signup"><big>Реєстрація</big></a>

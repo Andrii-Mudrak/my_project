@@ -1,9 +1,11 @@
+from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 from .models import Product, Profile, Comment
 from .forms import SignUpForm, ProductForm, ProfileForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
 # Create your views here.
 
 
@@ -39,7 +41,6 @@ def create(request):
 def comment(request, id=int):
     prod = Product.objects.get(id=id)
     comm = Comment.objects.filter(product_id=id)
-    print(prod.id, prod.title, prod.content)
     return render(request, 'mainapp/comment.html', {'comm': comm, 'prod': prod})
 
 
@@ -72,7 +73,6 @@ def signup(request):
             profile.is_verified = True
             profile.name = profile.user
             profile.save()
-        # context = {'form': form, 'profile_form': profile_form}
         return  redirect('/home')
     else:
         form = SignUpForm()
@@ -86,7 +86,7 @@ def product(request,id=int):
     prod.is_active = False
     prod.deleted_at = datetime.utcnow()
     prod.save()
-    return  redirect('/home')
+    return  redirect('/list_p')
 
 
 def profile(request):
@@ -111,14 +111,14 @@ def restore(request,id=int):
     # prod.delete() # видалення запису з бази даних повністю
     prod.is_active = True
     prod.save()
-    return  redirect('/home')
+    return  redirect('/done')
 
 
 def delete(request,id=int):
     prod = Product.objects.get(id=id)
     prod.delete() # видалення запису з бази даних повністю
     prod.save()
-    return  redirect('/home')
+    return  redirect('/done')
 
 
 def revised(request, id=int):
@@ -126,3 +126,15 @@ def revised(request, id=int):
     comm.revised = True
     comm.save()
     return  redirect('/home')
+
+def about(request):
+    prof_id = Profile.objects.get(user=request.user).id
+    prof = Profile.objects.filter(id=prof_id)
+    return render(request, 'mainapp/about.html', {'prof': prof})
+
+def delete_account(request):
+    user_del = User.objects.filter(id=request.user.id)
+    # user_del = False
+    print(user_del)
+    logout
+    return redirect('/home')

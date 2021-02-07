@@ -8,8 +8,8 @@
         {% if element.is_active == True %}
         <div class="alert alert-primary" style="width:600px; display: block; margin: 0 auto;
         text-align:center" role="alert">
-            {{ element.title }} - {{ element.content }} - {{ element.author }}
-            {{ element.image.url }}
+            {{ element.title }}<p></p>
+            {{ element.content }}
             <p></p><img src="{{ element.image.url }}" style="width:200px; display: block; margin: 0 auto;
         text-align:center"><p></p>
             <a class="btn btn-outline-primary"  href="/comment/{{ element.id }}">Подробиці</a>
