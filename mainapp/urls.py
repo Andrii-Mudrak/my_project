@@ -19,4 +19,5 @@ urlpatterns = [
     path('revised/<id>/', views.revised),
     path('about', views.about),
     path('delete_account', views.delete_account),
+    path('change_account', views.change_account),
 ]

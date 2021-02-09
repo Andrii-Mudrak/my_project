@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 
 
 def home(request):
+    logout
     prod = Product.objects.all()
     # prof = Profile.objects.all()
     # return render(request, 'mainapp/home.html', {'title': 'перелік', 'prod': prod, 'prof': prof})
@@ -134,7 +135,13 @@ def about(request):
 
 def delete_account(request):
     user_del = User.objects.filter(id=request.user.id)
-    # user_del = False
-    print(user_del)
+    request.user.is_active = 0
+    request.user.save()
     logout
     return redirect('/home')
+
+def change_account(request):
+    prof_id = Profile.objects.get(user=request.user).id
+    user_data = request.user
+    prof = Profile.objects.filter(id=prof_id).all()
+    return render(request, 'mainapp/change_account.html', {'prof': prof, 'user_data': user_data})
