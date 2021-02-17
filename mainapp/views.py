@@ -1,11 +1,14 @@
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 from .models import Product, Profile, Comment
-from .forms import SignUpForm, ProductForm, ProfileForm, CommentForm
+from .forms import SignUpForm, ProductForm, ProfileForm, CommentForm, Change_account_Form
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
+import logging
+logging.basicConfig(filename='logger.log', level=logging.DEBUG)
+logger = logging.getLogger()
 # Create your views here.
 
 
@@ -26,7 +29,6 @@ def list_p(request):
 def create(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
-        print(form.is_valid())
         if form.is_valid() and request.user.is_authenticated:
             prod = form.save(commit=False)
             prod.is_active = 1
@@ -66,7 +68,6 @@ def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         profile_form = ProfileForm(request.POST)
-        print(form.is_valid(), profile_form.is_valid())
         if form.is_valid() and profile_form.is_valid():
             user = form.save()
             profile = profile_form.save(commit=False)
@@ -87,7 +88,7 @@ def product(request,id=int):
     prod.is_active = False
     prod.deleted_at = datetime.utcnow()
     prod.save()
-    return  redirect('/list_p')
+    return redirect('/list_p')
 
 
 def profile(request):
@@ -112,21 +113,21 @@ def restore(request,id=int):
     # prod.delete() # видалення запису з бази даних повністю
     prod.is_active = True
     prod.save()
-    return  redirect('/done')
+    return redirect('/done')
 
 
 def delete(request,id=int):
     prod = Product.objects.get(id=id)
     prod.delete() # видалення запису з бази даних повністю
     prod.save()
-    return  redirect('/done')
+    return redirect('/done')
 
 
 def revised(request, id=int):
     comm = Comment.objects.get(id=id)
     comm.revised = True
     comm.save()
-    return  redirect('/home')
+    return redirect('/home')
 
 def about(request):
     prof_id = Profile.objects.get(user=request.user).id
@@ -141,7 +142,21 @@ def delete_account(request):
     return redirect('/home')
 
 def change_account(request):
-    prof_id = Profile.objects.get(user=request.user).id
-    user_data = request.user
-    prof = Profile.objects.filter(id=prof_id).all()
-    return render(request, 'mainapp/change_account.html', {'prof': prof, 'user_data': user_data})
+    # prof_id = Profile.objects.get(user=request.user).id
+    # user_data = request.user
+    # prof = Profile.objects.filter(id=prof_id).all()
+    # form = Change_account_Form()
+    logger.info(f"користувач {request.user}")
+    if request.method == 'POST' and request.user.is_authenticated:
+        form = Change_account_Form()
+        logger.info(f"валідність форми - {form.is_valid()}")
+        if form.is_valid():
+            # comm = form.save(commit=False)
+            # comm.user_id = Profile.objects.get(user=request.user)
+            # comm.product_id = Product.objects.get(id=id)
+            # comm.save()
+            logger.info("done")
+        return  redirect('/home')
+    else:
+        form = Change_account_Form()
+    return render(request, 'mainapp/change_account.html', {'form': form})

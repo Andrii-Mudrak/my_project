@@ -5,6 +5,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
 
+
 class Comment(models.Model):
     id = models.BigAutoField(primary_key=True)
     content = models.TextField('content', max_length=400, blank=False)
