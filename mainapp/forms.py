@@ -29,8 +29,6 @@ class ProductForm(forms.ModelForm):
 
 
 class ProfileForm(forms.ModelForm):
-    # name = forms.CharField(widget=forms.TextInput(attrs={
-    #     'class': 'special', 'placeholder': 'name'}), max_length=100)
     first_name = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'special', 'placeholder': 'Ім`я'}), max_length=32)
     last_name = forms.CharField(widget=forms.TextInput(attrs={

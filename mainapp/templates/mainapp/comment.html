@@ -1,6 +1,5 @@
 {% extends 'mainapp/basic.html' %}
-
-{% block title %} Коментар {{ title }}
+{% block title %} Коментарі {{ title }}
 {% endblock %}
 {% block body %}
 <form method="POST">
@@ -27,7 +26,7 @@
                 {% ifequal element.revised True %}
                     <td>Переглянуто</td>
                 {% else %}
-                    <td><button class="btn btn-link">Переглянути</td>
+                    <td> <a class="btn btn-link"  href="/revised/{{ element.id }}/">Переглянути</td>
                 {% endifequal %}
             </tr>
         {% endfor %}
