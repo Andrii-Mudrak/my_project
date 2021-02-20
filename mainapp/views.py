@@ -146,10 +146,13 @@ def change_account(request):
     # user_data = request.user
     # prof = Profile.objects.filter(id=prof_id).all()
     # form = Change_account_Form()
+    logger.info(100*"*")
     logger.info(f"користувач {request.user}")
     if request.method == 'POST' and request.user.is_authenticated:
         form = Change_account_Form()
         logger.info(f"валідність форми - {form.is_valid()}")
+        logger.info(f"помилки - {form.errors}")
+        # logger.info({form.error})
         if form.is_valid():
             # comm = form.save(commit=False)
             # comm.user_id = Profile.objects.get(user=request.user)
