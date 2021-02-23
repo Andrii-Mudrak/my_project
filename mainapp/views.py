@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
+from django import forms
 import logging
 logging.basicConfig(filename='logger.log', level=logging.DEBUG)
 logger = logging.getLogger()
@@ -110,7 +111,6 @@ def done(request):
 
 def restore(request,id=int):
     prod = Product.objects.get(id=id)
-    # prod.delete() # видалення запису з бази даних повністю
     prod.is_active = True
     prod.save()
     return redirect('/done')
@@ -142,23 +142,15 @@ def delete_account(request):
     return redirect('/home')
 
 def change_account(request):
-    # prof_id = Profile.objects.get(user=request.user).id
-    # user_data = request.user
-    # prof = Profile.objects.filter(id=prof_id).all()
-    # form = Change_account_Form()
-    logger.info(100*"*")
     logger.info(f"користувач {request.user}")
     if request.method == 'POST' and request.user.is_authenticated:
-        form = Change_account_Form()
-        logger.info(f"валідність форми - {form.is_valid()}")
-        logger.info(f"помилки - {form.errors}")
-        # logger.info({form.error})
+        form = Change_account_Form(request.POST)
         if form.is_valid():
-            # comm = form.save(commit=False)
-            # comm.user_id = Profile.objects.get(user=request.user)
-            # comm.product_id = Product.objects.get(id=id)
-            # comm.save()
-            logger.info("done")
+            user = form.save()
+            logger.info({user})
+            prof_id = Profile.objects.get(user=request.user).id
+            prof = Profile.objects.filter(id=prof_id)
+            logger.info(f'profile is {list(prof)}')
         return  redirect('/home')
     else:
         form = Change_account_Form()
