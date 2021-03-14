@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Product, Profile, Comment
 from django.forms.forms import Form
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class SignUpForm(UserCreationForm):
@@ -37,8 +38,7 @@ class ProfileForm(forms.ModelForm):
         'class': 'special', 'placeholder': 'Прізвище'}), max_length=32)
     email = forms.EmailField(widget=forms.EmailInput(attrs={
         'class': 'special', 'placeholder': 'Електронна пошта'}), max_length=64)
-    phone = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'special', 'placeholder': '+380671234567'}), max_length=14)
+    phone = PhoneNumberField(blank=True)
 
     class Meta:
         model = Profile
@@ -53,18 +53,17 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['content']
 
-class Change_account_Form(forms.Form):
-    username_new = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'special', 'placeholder': 'Псевдо'}), max_length=16)
-    first_name_new = forms.CharField(widget=forms.TextInput(attrs={
+class ChangeAccountForm(forms.ModelForm):
+    # username = forms.CharField(widget=forms.TextInput(attrs={
+    #     'class': 'special', 'placeholder': 'Псевдо'}), max_length=16)
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'special', 'placeholder': 'Ім`я'}), max_length=32)
-    last_name_new = forms.CharField(widget=forms.TextInput(attrs={
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'special', 'placeholder': 'Прізвище'}), max_length=32)
-    email_new = forms.EmailField(widget=forms.EmailInput(attrs={
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
         'class': 'special', 'placeholder': 'Електронна пошта'}), max_length=64)
-    phone_new = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'special', 'placeholder': '+380671234567'}), max_length=14)
+    phone = PhoneNumberField(blank=True)
 
     class Meta:
-        model = Form
-        fields = ['username_new', 'first_name_new', 'last_name_new', 'email', 'phone_new']
+        model = Profile
+        fields = ['first_name', 'last_name', 'email', 'phone']

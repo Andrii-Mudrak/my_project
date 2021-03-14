@@ -1,13 +1,15 @@
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 from .models import Product, Profile, Comment
-from .forms import SignUpForm, ProductForm, ProfileForm, CommentForm, Change_account_Form
+from .forms import SignUpForm, ProductForm, ProfileForm, CommentForm, ChangeAccountForm
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django import forms
 import logging
+
+
 logging.basicConfig(filename='logger.log', level=logging.DEBUG)
 logger = logging.getLogger()
 # Create your views here.
@@ -141,17 +143,23 @@ def delete_account(request):
     logout
     return redirect('/home')
 
-def change_account(request):
+def change_account(request, id=int):
     logger.info(f"користувач {request.user}")
     if request.method == 'POST' and request.user.is_authenticated:
-        form = Change_account_Form(request.POST)
+        form = ChangeAccountForm(request.POST)
+        if form.errors:
+            logger.info(f'!!!!! помилка {form.errors}')
         if form.is_valid():
-            user = form.save()
-            logger.info({user})
             prof_id = Profile.objects.get(user=request.user).id
-            prof = Profile.objects.filter(id=prof_id)
-            logger.info(f'profile is {list(prof)}')
+            prof = Profile.objects.get(id=prof_id)
+            prof.first_name = form['first_name'].value()
+            prof.last_name = form['last_name'].value()
+            prof.email = form['email'].value()
+            prof.phone = form['phone'].value()
+            prof.updated_at = datetime.utcnow()
+            prof.save()
+            logout(request)
         return  redirect('/home')
     else:
-        form = Change_account_Form()
+        form = ChangeAccountForm()
     return render(request, 'mainapp/change_account.html', {'form': form})
