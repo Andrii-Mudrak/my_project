@@ -6,7 +6,6 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-from django import forms
 import logging
 
 
@@ -16,20 +15,21 @@ logger = logging.getLogger()
 
 
 def home(request):
+    """Домашня сторінка"""
     logout
     prod = Product.objects.all()
-    # prof = Profile.objects.all()
-    # return render(request, 'mainapp/home.html', {'title': 'перелік', 'prod': prod, 'prof': prof})
     return render(request, 'mainapp/home.html', {'prod': prod})
 
 
 def list_p(request):
+    """Перелік об'яв, стаорених користувачем який залогінений"""
     prof_id = Profile.objects.get(user=request.user).id
     prod = Product.objects.filter(author_id=prof_id)
     return render(request, 'mainapp/list.html', {'prod': prod})
 
 
 def create(request):
+    """Створення оголошення"""
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid() and request.user.is_authenticated:
@@ -45,6 +45,7 @@ def create(request):
 
 
 def comment(request, id=int):
+    """Запис коментаря до певного оголошення"""
     prod = Product.objects.get(id=id)
     comm = Comment.objects.filter(product_id=id)
     return render(request, 'mainapp/comment.html', {'comm': comm, 'prod': prod})
@@ -52,7 +53,7 @@ def comment(request, id=int):
 
 @login_required()
 def look(request, id=int):
-    # user_list = Product.objects.get(id=id)
+    """Перегляд оголошення"""
     user_list = get_object_or_404(Product, id=id)
     if request.method == 'POST' and request.user.is_authenticated:
         form = CommentForm(request.POST)
@@ -68,6 +69,7 @@ def look(request, id=int):
 
 
 def signup(request):
+    """Реєстрація нового користувача в базі"""
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         profile_form = ProfileForm(request.POST)
@@ -86,8 +88,9 @@ def signup(request):
 
 
 def product(request,id=int):
+    """Видалення оголошення шляхом зміни атрибуту is_active. Автор оголошення може потім або видалити
+    остаточно або відновити."""
     prod = Product.objects.get(id=id)
-    # prod.delete() # видалення запису з бази даних повністю
     prod.is_active = False
     prod.deleted_at = datetime.utcnow()
     prod.save()
@@ -95,6 +98,7 @@ def product(request,id=int):
 
 
 def profile(request):
+    """Редагування існуючого профілю: Ім'я, прізвище, електронна пошта та телефон"""
     if request.method == 'POST':
         form = ProfileForm(request.POST)
         if form.is_valid():
@@ -106,12 +110,15 @@ def profile(request):
 
 
 def done(request):
+    """Відображення оголошень які було видалено автором. Їх  можливо за бажання автора
+    або відновити або видалити остаточно"""
     prof_id = Profile.objects.get(user=request.user).id
     prod = Product.objects.filter(author_id=prof_id, is_active=False).all()
     return render(request, 'mainapp/done.html', {'prod': prod})
 
 
 def restore(request,id=int):
+    """Відновлення раніше видалених повідомлень"""
     prod = Product.objects.get(id=id)
     prod.is_active = True
     prod.save()
@@ -119,6 +126,7 @@ def restore(request,id=int):
 
 
 def delete(request,id=int):
+    """Остаточне видалення повідомлень"""
     prod = Product.objects.get(id=id)
     prod.delete() # видалення запису з бази даних повністю
     prod.save()
@@ -126,24 +134,28 @@ def delete(request,id=int):
 
 
 def revised(request, id=int):
+    """Зміна статусу коментаря до оголошення на <<переглянуте>>"""
     comm = Comment.objects.get(id=id)
     comm.revised = True
     comm.save()
     return redirect('/home')
 
 def about(request):
+    """Відображення відомостей про користувача який залогінений з пропозицією
+    або змінити дані або видалити акаунт"""
     prof_id = Profile.objects.get(user=request.user).id
     prof = Profile.objects.filter(id=prof_id)
     return render(request, 'mainapp/about.html', {'prof': prof})
 
 def delete_account(request):
-    user_del = User.objects.filter(id=request.user.id)
+    """Видалення акаунту"""
     request.user.is_active = 0
     request.user.save()
     logout
     return redirect('/home')
 
 def change_account(request, id=int):
+    """"Зміна даних акаунту"""
     logger.info(f"користувач {request.user}")
     if request.method == 'POST' and request.user.is_authenticated:
         form = ChangeAccountForm(request.POST)
