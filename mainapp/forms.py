@@ -2,7 +2,6 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from mainapp.models import Product, Profile, Comment
-from django.forms.forms import Form
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -14,7 +13,6 @@ class SignUpForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-        # I've tried both of these 'fields' declaration, result is the same
         fields = ['username', 'password1', 'password2']
 
 
@@ -27,7 +25,6 @@ class ProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-    #     # I've tried both of these 'fields' declaration, result is the same
         fields = ['title', 'content', 'image']
 
 
@@ -52,6 +49,7 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
+
 
 class ChangeAccountForm(forms.ModelForm):
     # username = forms.CharField(widget=forms.TextInput(attrs={

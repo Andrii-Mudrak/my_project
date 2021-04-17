@@ -5,7 +5,6 @@ from .forms import SignUpForm, ProductForm, ProfileForm, CommentForm, ChangeAcco
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.models import User
 import logging
 
 
@@ -14,21 +13,25 @@ logger = logging.getLogger()
 # Create your views here.
 
 
+@login_required()
 def home(request):
     """Домашня сторінка"""
-    logout
+    # logout(request)
     prod = Product.objects.all()
     return render(request, 'mainapp/home.html', {'prod': prod})
 
 
-
+@login_required()
 def list_p(request):
-    """Перелік об'яв, стаорених користувачем який залогінений"""
+    """Перелік об'яв, створених користувачем який залогінений"""
     prof_id = Profile.objects.get(user=request.user).id
     prod = Product.objects.filter(author_id=prof_id)
+    # prod = Product.objects.filter(author__id=request.user.id)
+    logger.info(f"користувач переглядає {request.user.id}")
     return render(request, 'mainapp/list.html', {'prod': prod})
 
 
+@login_required()
 def create(request):
     """Створення оголошення"""
     if request.method == 'POST':
@@ -39,17 +42,17 @@ def create(request):
             prod.author = Profile.objects.get(user=request.user)
             prod.save()
             prod.image = form.instance
-        return  redirect('/home')
+        return redirect('/home')
     else:
         form = ProductForm()
         return render(request, 'mainapp/create.html', {'form': form})
 
 
+@login_required()
 def comment(request, id=int):
-
     """Запис коментаря до певного оголошення"""
-
     prod = Product.objects.get(id=id)
+    logger.info(f"comment {prod}")
     comm = Comment.objects.filter(product_id=id)
     return render(request, 'mainapp/comment.html', {'comm': comm, 'prod': prod})
 
@@ -65,12 +68,13 @@ def look(request, id=int):
             comm.user_id = Profile.objects.get(user=request.user)
             comm.product_id = Product.objects.get(id=id)
             comm.save()
-        return  redirect('/home')
+        return redirect('/home')
     else:
         form = CommentForm()
     return render(request, 'mainapp/look.html', {'user_list': user_list, 'form': form})
 
 
+@login_required()
 def signup(request):
     """Реєстрація нового користувача в базі"""
     if request.method == 'POST':
@@ -83,13 +87,14 @@ def signup(request):
             profile.is_verified = True
             profile.name = profile.user
             profile.save()
-        return  redirect('/home')
+        return redirect('/home')
     else:
         form = SignUpForm()
         profile_form = ProfileForm()
         return render(request, 'mainapp/signup.html', {'form': form, 'profile_form': profile_form})
 
 
+@login_required()
 def product(request,id=int):
     """Видалення оголошення шляхом зміни атрибуту is_active. Автор оголошення може потім або видалити
     остаточно або відновити."""
@@ -100,6 +105,7 @@ def product(request,id=int):
     return redirect('/list_p')
 
 
+@login_required()
 def profile(request):
     """Редагування існуючого профілю: Ім'я, прізвище, електронна пошта та телефон"""
     if request.method == 'POST':
@@ -112,15 +118,16 @@ def profile(request):
         return render(request, 'mainapp/profile.html', {'form': form})
 
 
+@login_required()
 def done(request):
     """Відображення оголошень які було видалено автором. Їх  можливо за бажання автора
     або відновити або видалити остаточно"""
-    prof_id = Profile.objects.get(user=request.user).id
-    prod = Product.objects.filter(author_id=prof_id, is_active=False).all()
+    prod = Product.objects.filter(author__user=request.user, is_active=False).all()
     return render(request, 'mainapp/done.html', {'prod': prod})
 
 
-def restore(request,id=int):
+@login_required()
+def restore(request, id):
     """Відновлення раніше видалених повідомлень"""
     prod = Product.objects.get(id=id)
     prod.is_active = True
@@ -128,14 +135,14 @@ def restore(request,id=int):
     return redirect('/done')
 
 
-def delete(request,id=int):
+@login_required()
+def delete(request, id):
     """Остаточне видалення повідомлень"""
-    prod = Product.objects.get(id=id)
-    prod.delete() # видалення запису з бази даних повністю
-    prod.save()
+    Product.objects.filter(id=id).delete()
     return redirect('/done')
 
 
+@login_required()
 def revised(request, id=int):
     """Зміна статусу коментаря до оголошення на <<переглянуте>>"""
     comm = Comment.objects.get(id=id)
@@ -143,6 +150,8 @@ def revised(request, id=int):
     comm.save()
     return redirect('/home')
 
+
+@login_required()
 def about(request):
     """Відображення відомостей про користувача який залогінений з пропозицією
     або змінити дані або видалити акаунт"""
@@ -150,13 +159,17 @@ def about(request):
     prof = Profile.objects.filter(id=prof_id)
     return render(request, 'mainapp/about.html', {'prof': prof})
 
+
+@login_required()
 def delete_account(request):
     """Видалення акаунту"""
     request.user.is_active = 0
     request.user.save()
-    logout
+    logout(request)
     return redirect('/home')
 
+
+@login_required()
 def change_account(request, id=int):
     """"Зміна даних акаунту"""
     logger.info(f"користувач {request.user}")
@@ -174,8 +187,7 @@ def change_account(request, id=int):
             prof.updated_at = datetime.utcnow()
             prof.save()
             logout(request)
-        return  redirect('/home')
+        return redirect('/home')
     else:
         form = ChangeAccountForm()
     return render(request, 'mainapp/change_account.html', {'form': form})
-
