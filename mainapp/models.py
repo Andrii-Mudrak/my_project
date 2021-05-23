@@ -53,7 +53,7 @@ class Profile(models.Model):
     first_name = models.CharField('First name', max_length=32, default='First name')
     last_name = models.CharField('Last name', max_length=32, default='Last name')
     email = models.CharField('email', max_length=40, default='1@get.com')
-    phone = PhoneNumberField(max_length=13, blank=False, default='+3806712345678')
+    phone = PhoneNumberField(max_length=13, blank=False)
     created_at = models.DateTimeField('created_at', default=datetime.utcnow)
     updated_at = models.DateTimeField('updated_at', default=datetime.utcnow)
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
