@@ -5,9 +5,10 @@
     {% for element in prod %}
         <div class="alert alert-primary" style="width:1000px; display: block; margin: 0 auto;
             text-align:left" role="alert">
-            {{ element.id }}**{{ element.title }} - {{ element.content }} - {{ element.author }} - {{ element.email }}
-            <a class="btn btn-outline-primary" style="margin-right: 0 auto" href="/restore/{{ element.id }}">Відновити</a>
-            <a class="btn btn-outline-primary" style="margin-right: 0 auto" href="/delete/{{ element.id }}">Видалити</a></div>
+            <img src="{{ element.image.url }}" style="width:150px">
+            {{ element.title }} <p></p>{{ element.content }}
+            <a class="d-flex justify-content-end" href="/restore/{{ element.id }}">Відновити</a>
+            <a class="d-flex justify-content-end" style="margin-right: 200 auto" href="/delete/{{ element.id }}">Видалити</a></div>
         <p></p>
     {% endfor %}
 {% endblock %}

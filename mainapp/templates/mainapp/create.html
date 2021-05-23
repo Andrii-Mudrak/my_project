@@ -6,7 +6,7 @@
 <div class="alert alert-primary" style="width:600px; display: block; margin: 0 auto;
         text-align:center" role="alert">
     <strong>Моє нове оголошення</strong>
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% for field in form %}
     <p>
