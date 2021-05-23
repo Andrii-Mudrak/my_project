@@ -21,6 +21,7 @@ def home(request):
     return render(request, 'mainapp/home.html', {'prod': prod})
 
 
+
 def list_p(request):
     """Перелік об'яв, стаорених користувачем який залогінений"""
     prof_id = Profile.objects.get(user=request.user).id
@@ -45,7 +46,9 @@ def create(request):
 
 
 def comment(request, id=int):
+
     """Запис коментаря до певного оголошення"""
+
     prod = Product.objects.get(id=id)
     comm = Comment.objects.filter(product_id=id)
     return render(request, 'mainapp/comment.html', {'comm': comm, 'prod': prod})
@@ -175,3 +178,4 @@ def change_account(request, id=int):
     else:
         form = ChangeAccountForm()
     return render(request, 'mainapp/change_account.html', {'form': form})
+
