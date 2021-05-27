@@ -10,10 +10,9 @@ import logging
 
 logging.basicConfig(filename='logger.log', level=logging.DEBUG)
 logger = logging.getLogger()
-# Create your views here.
 
 
-@login_required()
+# @login_required()
 def home(request):
     """Домашня сторінка"""
     # logout(request)
