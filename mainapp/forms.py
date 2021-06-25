@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Product, Profile, Comment
+from mainapp.models import Product, Profile, Comment
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class SignUpForm(UserCreationForm):
@@ -12,7 +13,6 @@ class SignUpForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-        # I've tried both of these 'fields' declaration, result is the same
         fields = ['username', 'password1', 'password2']
 
 
@@ -21,11 +21,11 @@ class ProductForm(forms.ModelForm):
         'class': 'special', 'placeholder': 'Заголовок'}), max_length=100)
     content = forms.CharField(widget=forms.Textarea(attrs={
         'class': 'special', 'placeholder': 'Опис'}), max_length=400)
+    # image = forms.ImageField(widget=forms.FileInput(attrs={'class':'special'}))
 
     class Meta:
         model = Product
-    #     # I've tried both of these 'fields' declaration, result is the same
-        fields = ['title', 'content']
+        fields = ['title', 'content', 'image']
 
 
 class ProfileForm(forms.ModelForm):
@@ -35,8 +35,7 @@ class ProfileForm(forms.ModelForm):
         'class': 'special', 'placeholder': 'Прізвище'}), max_length=32)
     email = forms.EmailField(widget=forms.EmailInput(attrs={
         'class': 'special', 'placeholder': 'Електронна пошта'}), max_length=64)
-    phone = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'special', 'placeholder': '+380671234567'}), max_length=14)
+    phone = PhoneNumberField(blank=True)
 
     class Meta:
         model = Profile
@@ -50,3 +49,19 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
+
+
+class ChangeAccountForm(forms.ModelForm):
+    # username = forms.CharField(widget=forms.TextInput(attrs={
+    #     'class': 'special', 'placeholder': 'Псевдо'}), max_length=16)
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'special', 'placeholder': 'Ім`я'}), max_length=32)
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'special', 'placeholder': 'Прізвище'}), max_length=32)
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class': 'special', 'placeholder': 'Електронна пошта'}), max_length=64)
+    phone = PhoneNumberField(blank=True)
+
+    class Meta:
+        model = Profile
+        fields = ['first_name', 'last_name', 'email', 'phone']

@@ -1,7 +1,6 @@
 from django.urls import path, include
 from . import views
 
-
 urlpatterns = [
     path('', views.home),
     path('', include('django.contrib.auth.urls')),
@@ -17,4 +16,7 @@ urlpatterns = [
     path('restore/<id>/', views.restore),
     path('delete/<id>/', views.delete),
     path('revised/<id>/', views.revised),
+    path('about', views.about),
+    path('delete_account', views.delete_account),
+    path('change_account', views.change_account),
 ]

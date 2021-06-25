@@ -5,6 +5,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
 
+
 class Comment(models.Model):
     id = models.BigAutoField(primary_key=True)
     content = models.TextField('content', max_length=400, blank=False)
@@ -27,6 +28,8 @@ class Product(models.Model):
     deleted_at = models.DateTimeField('deleted_at', null=True)
     is_active = models.BooleanField('is_active', default=True)
     author = models.ForeignKey('Profile', on_delete=models.SET_NULL, null=True)
+    image = models.ImageField(null=True, blank=True, upload_to="images/",
+                              default='images/oops.jpeg')
 
     def __str__(self):
         return self.content
@@ -50,7 +53,7 @@ class Profile(models.Model):
     first_name = models.CharField('First name', max_length=32, default='First name')
     last_name = models.CharField('Last name', max_length=32, default='Last name')
     email = models.CharField('email', max_length=40, default='1@get.com')
-    phone = PhoneNumberField(blank=True)
+    phone = PhoneNumberField(max_length=13, blank=False)
     created_at = models.DateTimeField('created_at', default=datetime.utcnow)
     updated_at = models.DateTimeField('updated_at', default=datetime.utcnow)
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
