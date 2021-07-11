@@ -7,13 +7,18 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 class SignUpForm(UserCreationForm):
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'special', 'placeholder': 'Пароль'}))
+        'class': 'special', 'placeholder': 'xxxxxxx', 'autocomplete': 'off', 'data-toggle': 'p'}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'special', 'placeholder': 'Підтвердити пароль'}))
 
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ['username', 'password1', 'password2']
+        # widgets = {
+        #     "username": TextInput(attrs={'placeholder': 'ex:test', 'autocomplete': 'off'}),
+        #     "password": PasswordInput(
+        #         attrs={'placeholder': '********', 'autocomplete': 'off', 'data-toggle': 'password'}),
+        # }
 
 
 class ProductForm(forms.ModelForm):

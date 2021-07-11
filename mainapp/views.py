@@ -12,7 +12,6 @@ logging.basicConfig(filename='logger.log', level=logging.DEBUG)
 logger = logging.getLogger()
 
 
-# @login_required()
 def home(request):
     """Домашня сторінка"""
     # logout(request)
@@ -73,7 +72,6 @@ def look(request, id=int):
     return render(request, 'mainapp/look.html', {'user_list': user_list, 'form': form})
 
 
-@login_required()
 def signup(request):
     """Реєстрація нового користувача в базі"""
     if request.method == 'POST':
@@ -154,8 +152,9 @@ def revised(request, id=int):
 def about(request):
     """Відображення відомостей про користувача який залогінений з пропозицією
     або змінити дані або видалити акаунт"""
-    prof_id = Profile.objects.get(user=request.user).id
-    prof = Profile.objects.filter(id=prof_id)
+    # prof_id = Profile.objects.get(user=request.user).id
+    # prof = Profile.objects.filter(id=prof_id)s
+    prof = Profile.objects.filter(id=request.user.id)
     return render(request, 'mainapp/about.html', {'prof': prof})
 
 
@@ -190,3 +189,6 @@ def change_account(request, id=int):
     else:
         form = ChangeAccountForm()
     return render(request, 'mainapp/change_account.html', {'form': form})
+#
+# def logout(request):
+#     logout(request)
