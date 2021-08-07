@@ -2,13 +2,20 @@
 
 {% block title %}Мої завершені угоди{% endblock %}
 {% block body %}
+<form method="post" action="">
     {% for element in prod %}
-        <div class="alert alert-primary" style="width:1000px; display: block; margin: 0 auto;
+    {% csrf_token %}
+    {{ form.as_p}}
+
+        <div class="alert salert-primary" style="width:1000px; display: block; margin: 0 auto;
             text-align:left" role="alert">
             <img src="{{ element.image.url }}" style="width:150px">
             {{ element.title }} <p></p>{{ element.content }}
             <a class="d-flex justify-content-end" href="/restore/{{ element.id }}">Відновити</a>
-            <a class="d-flex justify-content-end" style="margin-right: 200 auto" href="/delete/{{ element.id }}">Видалити</a></div>
+            <a methods="POST" class="d-flex justify-content-end" style="margin-right: 200 auto"
+               href="/delete/{{ element.id }}">Видалити</a>
+        </div>
         <p></p>
     {% endfor %}
+</form>
 {% endblock %}

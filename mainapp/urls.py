@@ -1,11 +1,12 @@
 from django.urls import path, include
+from django.views.generic.base import TemplateView
 from . import views
 
 urlpatterns = [
     path('', views.home),
     path('', include('django.contrib.auth.urls')),
     path('product/<id>/', views.product),
-    path('home', views.home),
+    path('home', TemplateView.as_view(template_name="home.html")),
     path('list_p', views.list_p),
     path('profile', views.profile),
     path('create', views.create, name='create'),

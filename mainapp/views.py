@@ -1,22 +1,23 @@
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 from .models import Product, Profile, Comment
-from .forms import SignUpForm, ProductForm, ProfileForm, CommentForm, ChangeAccountForm
+from .forms import SignUpForm, ProductForm, ProfileForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.shortcuts import get_object_or_404
 import logging
+from django.views.generic.base import TemplateView
 
 
 logging.basicConfig(filename='logger.log', level=logging.DEBUG)
 logger = logging.getLogger()
 
 
-def home(request):
-    """Домашня сторінка"""
-    # logout(request)
-    prod = Product.objects.all()
-    return render(request, 'mainapp/home.html', {'prod': prod})
+# def home(request):
+#     """Домашня сторінка"""
+#     # logout(request)
+#     prod = Product.objects.all()
+#     return render(request, 'mainapp/home.html', {'prod': prod})
 
 
 @login_required()
@@ -47,7 +48,7 @@ def create(request):
 
 
 @login_required()
-def comment(request, id=int):
+def comment(request, id):
     """Запис коментаря до певного оголошення"""
     prod = Product.objects.get(id=id)
     logger.info(f"comment {prod}")
@@ -56,7 +57,7 @@ def comment(request, id=int):
 
 
 @login_required()
-def look(request, id=int):
+def look(request, id):
     """Перегляд оголошення"""
     user_list = get_object_or_404(Product, id=id)
     if request.method == 'POST' and request.user.is_authenticated:
@@ -92,7 +93,7 @@ def signup(request):
 
 
 @login_required()
-def product(request,id=int):
+def product(request,id):
     """Видалення оголошення шляхом зміни атрибуту is_active. Автор оголошення може потім або видалити
     остаточно або відновити."""
     prod = Product.objects.get(id=id)
@@ -120,6 +121,8 @@ def done(request):
     """Відображення оголошень які було видалено автором. Їх  можливо за бажання автора
     або відновити або видалити остаточно"""
     prod = Product.objects.filter(author__user=request.user, is_active=False).all()
+    print('done -- ', request.method)
+    # print(list(prod))
     return render(request, 'mainapp/done.html', {'prod': prod})
 
 
@@ -135,12 +138,14 @@ def restore(request, id):
 @login_required()
 def delete(request, id):
     """Остаточне видалення повідомлень"""
-    Product.objects.filter(id=id).delete()
+    print('delete---', request.method)
+    if request.method == "POST":
+        Product.objects.filter(id=id).delete()
     return redirect('/done')
 
 
 @login_required()
-def revised(request, id=int):
+def revised(request, id):
     """Зміна статусу коментаря до оголошення на <<переглянуте>>"""
     comm = Comment.objects.get(id=id)
     comm.revised = True
@@ -189,6 +194,48 @@ def change_account(request, id=int):
     else:
         form = ChangeAccountForm()
     return render(request, 'mainapp/change_account.html', {'form': form})
-#
-# def logout(request):
-#     logout(request)
+
+
+class DetailedProduct(TemplateView):
+    template_name = "mainapp/home.html"
+
+    # prod = Product.objects.all()
+    # print(prod[0])
+    #
+    # def __init__(self, user):
+    #     prod = Product.objects.get(author=user).all()
+    #     print('sdfsdfsdfsdfsdf')
+    #     return render(request, 'mainapp/home.html', {'prod': prod})
+    #
+    # def dispatch(request, user):
+    #     return print(user)
+
+    def get_context_data(request, user):
+        context = super(TemplateView, self).get_context_data(author=user)
+        # context['user.id'] = Product.objects.get(author=user)
+        print(context, 'df')
+        return print(context)
+
+    def get_instance(pk):
+        prod = Product.objects.get(id=pk)
+        # return get_object_or_404(Product, pk=pk)
+        # return render(request, template_name=template_name, {'prod': prod})
+
+
+    def get(self, request, pk):
+        prod = super().get(self, request, id=pk)
+        print(prod, pk)
+        # return render(request, 'mainapp/home.html', {'prod': prod})
+        return print(pk, prod)
+
+
+    @login_required()
+    def post(self, request, pk):
+        pass
+
+    @login_required()
+    def delete(self, request, pk):
+        pass
+
+
+

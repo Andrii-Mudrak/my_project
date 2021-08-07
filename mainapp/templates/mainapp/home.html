@@ -2,6 +2,8 @@
 {% block title %}Знайти річ{% endblock %}
 {% block body %}
     {% load static %}
+{{ user }}{{ user.id }}
+{{ prod }}
         {% for element in prod %}
             {% if element.is_active == 1 %}
                 <div class="alert alert-primary" style="width:300px; display: block; margin: 0 auto;
