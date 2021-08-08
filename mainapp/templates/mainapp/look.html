@@ -6,8 +6,12 @@
 
 {% block body %}
 
+{{ user_list.author }}
+{{ user_list.pk}}
+{{ prod }}
 <form method="POST">
 {% csrf_token %}
+    
     <ul class="list-group" style="height:200px;width:600px; display: block; margin: 0 auto; text-align:center">
         <li class="list-group-item active" aria-current="true"> Пропозиція {{ user_list.author }}</li>
         <li class="list-group-item"><h4>Товар</h4>  {{ user_list.title }}</li>

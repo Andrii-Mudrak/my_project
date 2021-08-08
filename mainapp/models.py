@@ -32,7 +32,8 @@ class Product(models.Model):
                               default='images/oops.jpeg')
 
     def __str__(self):
-        return self.content
+
+        return self.content + "_" + str(self.id) + "_" + str(self.author)
 
 
 class Responce(models.Model):

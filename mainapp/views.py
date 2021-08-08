@@ -13,11 +13,11 @@ logging.basicConfig(filename='logger.log', level=logging.DEBUG)
 logger = logging.getLogger()
 
 
-# def home(request):
-#     """Домашня сторінка"""
-#     # logout(request)
-#     prod = Product.objects.all()
-#     return render(request, 'mainapp/home.html', {'prod': prod})
+def home(request):
+    """Домашня сторінка"""
+    # logout(request)
+    prod = Product.objects.all()
+    return render(request, 'mainapp/home.html', {'prod': prod})
 
 
 @login_required()
@@ -56,21 +56,21 @@ def comment(request, id):
     return render(request, 'mainapp/comment.html', {'comm': comm, 'prod': prod})
 
 
-@login_required()
-def look(request, id):
-    """Перегляд оголошення"""
-    user_list = get_object_or_404(Product, id=id)
-    if request.method == 'POST' and request.user.is_authenticated:
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comm = form.save(commit=False)
-            comm.user_id = Profile.objects.get(user=request.user)
-            comm.product_id = Product.objects.get(id=id)
-            comm.save()
-        return redirect('/home')
-    else:
-        form = CommentForm()
-    return render(request, 'mainapp/look.html', {'user_list': user_list, 'form': form})
+# @login_required()
+# def look(request, id):
+#     """Перегляд оголошення"""
+#     user_list = get_object_or_404(Product, id=id)
+#     if request.method == 'POST' and request.user.is_authenticated:
+#         form = CommentForm(request.POST)
+#         if form.is_valid():
+#             comm = form.save(commit=False)
+#             comm.user_id = Profile.objects.get(user=request.user)
+#             comm.product_id = Product.objects.get(id=id)
+#             comm.save()
+#         return redirect('/home')
+#     else:
+#         form = CommentForm()
+#     return render(request, 'mainapp/look.html', {'user_list': user_list, 'form': form})
 
 
 def signup(request):
@@ -197,23 +197,23 @@ def change_account(request, id=int):
 
 
 class DetailedProduct(TemplateView):
-    template_name = "mainapp/home.html"
+    template_name = "mainapp/look/<pk>.html"
 
     # prod = Product.objects.all()
-    # print(prod[0])
-    #
-    # def __init__(self, user):
-    #     prod = Product.objects.get(author=user).all()
-    #     print('sdfsdfsdfsdfsdf')
-    #     return render(request, 'mainapp/home.html', {'prod': prod})
-    #
-    # def dispatch(request, user):
-    #     return print(user)
+    # print("***-", prod)
+
+    def __init__(self, user):
+        prod = Product.objects.get(author=user).all()
+        print('sdfsdfsdfsdfsdf')
+        return render(request, 'mainapp/home.html', {'prod': prod})
+
+    def dispatch(request, user):
+        return print(user)
 
     def get_context_data(request, user):
-        context = super(TemplateView, self).get_context_data(author=user)
+        context = super(DetailedProduct, self).get_context_data(**kwargs)
         # context['user.id'] = Product.objects.get(author=user)
-        print(context, 'df')
+        print(1)
         return print(context)
 
     def get_instance(pk):
@@ -236,6 +236,3 @@ class DetailedProduct(TemplateView):
     @login_required()
     def delete(self, request, pk):
         pass
-
-
-
